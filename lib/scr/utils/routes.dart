@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import '../screens/searchPages/homePage.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
-  'homePage': (context) => const HomePage(),
+  'homepage': (context) => const HomePage(),
   'search': (context) => const SearchPage(),
-  'forDev/overView': (context) => const OverViewPage(),
-  'forDev/documentation': (context) => const DocumentationPage(),
-  'forDev/dataBase': (context) => const DataBasePage(),
-  'forDev/aboutProject': (context) => const AboutProjectPage(),
+  'fordev/overview': (context) => const OverViewPage(),
+  'fordev/documentation': (context) => const DocumentationPage(),
+  'fordev/database': (context) => const DataBasePage(),
+  'fordev/aboutproject': (context) => const AboutProjectPage(),
 };
