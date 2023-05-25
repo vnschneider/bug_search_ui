@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       //debugShowMaterialGrid: true,
       theme: themeData,
       routes: routes,
-      initialRoute: 'homepage',
+      initialRoute: '/',
       debugShowCheckedModeBanner: false,
     );
   }
