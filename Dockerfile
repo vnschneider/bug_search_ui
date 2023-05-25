@@ -37,7 +37,7 @@ COPY assets/Fonts /usr/local/share/fonts
 RUN fc-cache -f -v
 
 # Build Flutter for web
-RUN flutter build web -t lib/scr/screens/main.dart --release --no-tree-shake-icons
+RUN flutter build web --release --no-tree-shake-icons
 
 # Record the exposed port
 EXPOSE 8082
