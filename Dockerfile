@@ -41,5 +41,7 @@ RUN flutter build web --release --no-tree-shake-icons
 # Record the exposed port
 EXPOSE 8082
 
+WORKDIR /app/build/web/
+
 # Make server startup script executable and start the web server
-CMD ["flutter", "run", "web"]
+CMD ["nginx", "-g", "daemon off;"]
