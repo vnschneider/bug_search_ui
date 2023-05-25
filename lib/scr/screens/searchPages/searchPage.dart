@@ -27,13 +27,13 @@ class _SearchPageState extends State<SearchPage> {
   static List<SearchResults> get _searchResults => searchResults;
 
   void getResults() {
-    /* for (int index = _searchResults.length - 1; index >= 0; index--) {
+    for (int index = _searchResults.length - 1; index >= 0; index--) {
       searchResults.add(SearchResults(
         title: _searchResults[index].title,
         description: _searchResults[index].description,
         url: _searchResults[index].url,
       ));
-    }*/
+    }
   }
 
   @override

@@ -6,8 +6,15 @@ import 'package:iconsax/iconsax.dart';
 class CustomSearchBar extends StatelessWidget {
   final double height;
   final double width;
+  final bool? customHintText;
+  final String? hintText;
 
-  const CustomSearchBar({super.key, required this.height, required this.width});
+  const CustomSearchBar(
+      {super.key,
+      required this.height,
+      required this.width,
+      this.customHintText,
+      this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +32,9 @@ class CustomSearchBar extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextField(
+            onSubmitted: (value) {
+              value.isNotEmpty ? Navigator.pushNamed(context, 'search') : null;
+            },
             //controller: _passwordController,
 
             decoration: InputDecoration(
@@ -61,7 +71,9 @@ class CustomSearchBar extends StatelessWidget {
                 ],
               ),
               border: InputBorder.none,
-              hintText: 'O que você está procurando?',
+              hintText: customHintText == true
+                  ? hintText
+                  : 'O que você está procurando?',
               hintStyle: GoogleFonts.poppins(
                 textStyle: Theme.of(context).textTheme.headlineMedium,
                 //fontStyle: FontStyle.italic,
