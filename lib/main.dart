@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../utils/routes.dart';
-import '../utils/themeData.dart';
+import 'scr/utils/routes.dart';
+import 'scr/utils/themeData.dart';
 
 void main() {
   runApp(const MyApp());
