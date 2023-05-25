@@ -3,6 +3,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:bug_search/scr/models/bsLogo.dart';
 import 'package:bug_search/scr/models/customButton.dart';
 import 'package:bug_search/scr/models/searchBar.dart';
+import 'package:bug_search/scr/models/switch_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        //mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -41,33 +42,18 @@ class _HomePageState extends State<HomePage> {
                 function: () => Navigator.pushNamed(context, 'fordev/overview'),
               ),
               const SizedBox(width: 40),
-              FlutterSwitch(
-                toggleSize: 42,
-                height: 50,
-                width: 84,
-                borderRadius: 50,
-                padding: 6,
-                inactiveColor: const Color(0xff4766EA),
-                activeColor: const Color(0xFF000000),
-                inactiveIcon: const Icon(
-                  BootstrapIcons.brightness_low,
-                  //size: 44,
-                  color: Color(0xff4766EA),
-                ),
-                activeIcon: const Icon(
-                  BootstrapIcons.moon,
-                  //size: 44,
-                  color: Colors.black,
-                ),
-                duration: const Duration(milliseconds: 300),
-                value: isSwitched,
-                onToggle: (bool value) {
-                  setState(() => isSwitched = value);
-                },
-              ),
+              customSwitchButton(
+                  (p0) => {
+                        setState(() {
+                          isSwitched = p0;
+                        })
+                      },
+                  isSwitched,
+                  48,
+                  88),
             ],
           ),
-
+          SizedBox(height: MediaQuery.of(context).size.height * 0.25),
           //BODY//
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -86,23 +72,37 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              const CustomSearchBar(height: 62, width: 860),
+              const CustomSearchBar(height: 52, width: 660),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                      'Mais de XXX sites indexados, e mais de XXX termos no dicionário.',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                            fontWeight: FontWeight.w600,
+                          )),
+                ],
+              ),
             ],
           ),
-          Row(
+          /*  Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
-                width: 264,
+                //height: MediaQuery.of(context).size.height * 0.42,
+                width: MediaQuery.of(context).size.width <= 1200
+                    ? MediaQuery.of(context).size.width * 0.4
+                    : MediaQuery.of(context).size.width * 0.18,
                 child: Card(
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10)),
                   ),
-                  color: const Color(0xff4766EA),
+                  color: Theme.of(context).colorScheme.primary,
                   child: Padding(
                     padding: const EdgeInsets.all(14),
                     child: Flexible(
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.",
+                            "",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 25,
                             style: TextStyle(
@@ -163,10 +163,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ],
-          ),
+          ),*/
         ],
       ),
-    )
-        );
+    ));
   }
 }

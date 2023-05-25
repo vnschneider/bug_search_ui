@@ -6,17 +6,23 @@ final ThemeData themeData = ThemeData(
   unselectedWidgetColor: const Color.fromARGB(255, 145, 100, 200),
   textTheme: TextTheme(
     displayLarge: GoogleFonts.poppins(
-                      textStyle: const TextStyle(color: Color(0xff4766EA)),
-                      fontSize: 58,
+      textStyle: const TextStyle(color: Color(0xff4766EA)),
+      fontSize: 48,
 
-                      fontWeight: FontWeight.w600,
-                      //fontStyle: FontStyle.italic,
-                    ), 
+      fontWeight: FontWeight.w600,
+      //fontStyle: FontStyle.italic,
+    ),
+    displayMedium: GoogleFonts.poppins(
+      textStyle: const TextStyle(color: Color(0xffA3A3A3)),
+      fontSize: 18,
+
+      //fontStyle: FontStyle.italic,
+    ),
     headlineLarge: GoogleFonts.paytoneOne(
       textStyle: const TextStyle(
         color: Color(0xff4766EA),
       ),
-      fontSize: 58,
+      fontSize: 48,
       fontWeight: FontWeight.bold,
       //fontStyle: FontStyle.italic,
     ),
@@ -33,7 +39,7 @@ final ThemeData themeData = ThemeData(
       //fontStyle: FontStyle.italic,
     ),
     titleMedium: GoogleFonts.poppins(
-      textStyle: const TextStyle(color: Color(0xffFAFAFB)),
+      textStyle: const TextStyle(color: Color(0xffA3A3A3)),
       fontSize: 16,
       fontWeight: FontWeight.w300,
       //fontStyle: FontStyle.italic,
@@ -62,6 +68,17 @@ final ThemeData themeData = ThemeData(
       overlayColor: MaterialStatePropertyAll<Color>((Color(0xff848FFF))),
     ),
   ),
+
+  iconButtonTheme: const IconButtonThemeData(
+    style: ButtonStyle(
+        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(50)))),
+        iconColor: MaterialStatePropertyAll(Color(0xffFAFAFB)),
+        backgroundColor: MaterialStatePropertyAll(Color(0xff4766EA)),
+        iconSize: MaterialStatePropertyAll(28),
+        alignment: Alignment.center,
+        padding: MaterialStatePropertyAll(EdgeInsets.all(8))),
+  ),
   //buttonBarTheme: ButtonBarThemeData(),
   textSelectionTheme: const TextSelectionThemeData(
     selectionColor: Color(0xff848FFF),
@@ -84,5 +101,6 @@ final ThemeData themeData = ThemeData(
     onBackground: Color(0xff4766EA),
     surface: Color(0xffFAFAFB),
     onSurface: Color(0xffFAFAFB),
+    onSurfaceVariant: Color(0xffA3A3A3),
   ),
 );
