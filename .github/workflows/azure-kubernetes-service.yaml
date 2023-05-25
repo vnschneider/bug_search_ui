@@ -7,7 +7,7 @@ name: azure-kubernetes-service
 env:
     ACR_RESOURCE_GROUP: ifma-crawler
     AZURE_CONTAINER_REGISTRY: acrworkflow1684607545542
-    CONTAINER_NAME: image-workflow-1684607545542
+    CONTAINER_NAME: bugsearch
 jobs:
     buildImage:
         permissions:
