@@ -7,7 +7,8 @@ name: azure-kubernetes-service
 env:
     ACR_RESOURCE_GROUP: ifma-crawler
     AZURE_CONTAINER_REGISTRY: acrworkflow1684607545542
-    CONTAINER_NAME: bugsearch
+    CLUSTER_NAME: CrawlerBot
+    CLUSTER_RESOURCE_GROUP: ifma-crawler
     CONTAINER_NAME: bugsearch
     DEPLOYMENT_MANIFEST_PATH: |
         manifests/bugsearch/bugsearch-deployment.yaml
