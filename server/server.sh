@@ -11,9 +11,9 @@ if [ -n "$PID" ]; then
   kill "$PID"
 fi
 
-# switch directories
-cd build/web/
+# Switch directories
+cd /app/build/web
 
-# Start the server
-echo 'Server starting on port' $PORT '...'
-python3 -m http.server $PORT
+# Start Nginx server
+echo "Starting Nginx server on port $PORT..."
+nginx -g "daemon off;"
