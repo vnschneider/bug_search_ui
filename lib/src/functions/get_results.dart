@@ -76,11 +76,35 @@ Future<List<dynamic>> fetchData2(String url) async {
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    final jsonData = json.decode(response.body);
-    if (jsonData is List) {
-      return jsonData;
+    var data = jsonDecode(response.body);
+    print('PRINTING DATA FromAPI - JSON');
+    print(data);
+    // Filter the data and create a new list with only certain fields
+    var result = <Map<String, dynamic>>[];
+    for (var item in data) {
+      result.add({
+        'index': item['index'],
+        'guid': item['guid'],
+        'link': item['link'],
+        'title': item['title'],
+        'description': item['description'],
+        'favicon': item['favicon']
+      });
     }
-  }
 
-  return [];
+    print('PRINTING DATA FromAPI - RESULT');
+    print(result);
+    return result;
+
+    // final List<dynamic> jsonData = json.decode(response.body);
+    // print('PRINTING DATA FromAPI - JSON');
+    //  print(jsonData);
+    //  var result = jsonData.map((e) => MyJsonData.fromJson(e)).toList();
+
+    //  print('PRINTING DATA FromAPI - RESULT');
+    //  print(result);
+    //  return result;
+  } else {
+    throw Exception('Failed to fetch data');
+  }
 }

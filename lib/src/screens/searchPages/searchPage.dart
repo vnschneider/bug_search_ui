@@ -65,8 +65,8 @@ class _SearchPageState extends State<SearchPage> {
 
       setState(() {
         resultsFromJson = data;
-        print('PRINTING DATA FROM fetchDataFromAPI');
-        print(data);
+        print('PRINTING DATA FROM FetchDataFromAPI');
+        print(resultsFromJson);
       });
     } catch (e) {
       print('Algo deu errado! $e');
