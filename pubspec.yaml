@@ -39,6 +39,7 @@ dependencies:
   bootstrap_icons: ^1.10.2+1
   iconsax: ^0.0.8
   flutter_switch: ^0.3.2
+  http: ^0.13.6
   
 
 dev_dependencies:
@@ -97,12 +98,13 @@ fonts:
         - asset: assets/Fonts/Poppins/Poppins-Light.ttf
           weight: 300
         - asset: assets/Fonts/Poppins/Poppins-Regular.ttf
+          weight: Normal
         - asset: assets/Fonts/Poppins/Poppins-Medium.ttf
           weight: 500
         - asset: assets/Fonts/Poppins/Poppins-SemiBold.ttf
-          weight: 600
+          weight: SemiBold
         - asset: assets/Fonts/Poppins/Poppins-Bold.ttf
-          weight: 700
+          weight: Bold
 
     - family: PaytoneOne
       fonts:

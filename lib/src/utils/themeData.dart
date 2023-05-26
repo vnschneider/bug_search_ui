@@ -27,9 +27,11 @@ final ThemeData themeData = ThemeData(
       //fontStyle: FontStyle.italic,
     ),
     headlineMedium: GoogleFonts.poppins(
+      
       textStyle: const TextStyle(color: Color(0xffFAFAFB)),
       fontSize: 18,
       fontWeight: FontWeight.w400,
+      
       //fontStyle: FontStyle.italic,
     ),
     titleLarge: GoogleFonts.poppins(

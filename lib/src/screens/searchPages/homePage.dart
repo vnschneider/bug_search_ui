@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:bug_search/scr/models/bsLogo.dart';
-import 'package:bug_search/scr/models/customButton.dart';
-import 'package:bug_search/scr/models/searchBar.dart';
-import 'package:bug_search/scr/models/switch_button.dart';
+import 'package:bug_search/src/models/bsLogo.dart';
+import 'package:bug_search/src/models/customButton.dart';
+import 'package:bug_search/src/models/searchBar.dart';
+import 'package:bug_search/src/models/switch_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
