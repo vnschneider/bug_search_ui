@@ -2,7 +2,7 @@ name: azure-kubernetes-service
 "on":
     push:
         branches:
-            - master
+            - main
     workflow_dispatch: {}
 env:
     ACR_RESOURCE_GROUP: ifma-crawler
