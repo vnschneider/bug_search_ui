@@ -44,7 +44,7 @@ class CustomSearchBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    tooltip: 'Imagem',
+                    tooltip: 'Pesquisar por imagem',
                     hoverColor: Theme.of(context).colorScheme.secondary,
                     highlightColor: Theme.of(context).colorScheme.tertiary,
                     iconSize: 28,

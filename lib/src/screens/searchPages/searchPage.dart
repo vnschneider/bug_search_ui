@@ -6,6 +6,7 @@ import 'package:bug_search/src/functions/get_results.dart';
 import 'package:bug_search/src/models/bsLogo.dart';
 import 'package:bug_search/src/models/searchBar.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 import '../../models/switch_button.dart';
 
@@ -24,6 +25,9 @@ class _SearchPageState extends State<SearchPage> {
   bool _isTapped2 = false;
   bool _isTapped3 = false;
 
+  List<dynamic> resultsFromJson = [];
+  late List results2;
+
   /* Future<void> getJson() async {
     try {
       const url =
@@ -36,21 +40,42 @@ class _SearchPageState extends State<SearchPage> {
     }
   }*/
 
-  late Future<List<MyJsonData>> futureData;
+  /*Future<void> getJsonFile2(url) async {
+    final uri = Uri.parse(url);
+    final response = await DefaultAssetBundle.of(context).loadString(uri.path);
+    final data = await json.decode(response);
+    print('PRINTING DATA FROM GETJSONFILE2');
+    print(data['searchResults']);
+  }  */
+
+  /* Future fetchData2() async {
+    fetchData(
+            'https://dbc8-2804-c2c-cf03-cdb8-71a4-b78-e6ec-7cf7.ngrok-free.app/')
+        .whenComplete(() => null)
+        .then((value) => resultsFromJson = value);
+
+    print('PRINTING DATA FROM FETCHDATA2');
+    print(resultsFromJson);
+  }*/
+
+  Stream fetchDataFromAPI() async* {
+    try {
+      List<dynamic> data = await fetchData2(
+          'http://40.76.148.166/search?q=google'); // Call the fetchData function from api_service.dart
+
+      setState(() {
+        resultsFromJson = data;
+        print('PRINTING DATA FROM fetchDataFromAPI');
+        print(data);
+      });
+    } catch (e) {
+      print('Algo deu errado! $e');
+    }
+  }
 
   @override
   void initState() {
-    getJsonFile(Uri.parse(
-        'https://dbc8-2804-c2c-cf03-cdb8-71a4-b78-e6ec-7cf7.ngrok-free.app/'));
-
-    futureData = fetchData(
-        'https://dbc8-2804-c2c-cf03-cdb8-71a4-b78-e6ec-7cf7.ngrok-free.app/');
-    print('PRINT DATA');
-    print(futureData);
-    // getJson();
-    //  getResults();
-    //print('LIST ITEMS');
-    //rint(searchResults);
+    fetchDataFromAPI();
     super.initState();
   }
 
@@ -123,7 +148,8 @@ class _SearchPageState extends State<SearchPage> {
               children: [
                 Row(
                   children: [
-                    TextButton(
+                    IconButton(
+                        tooltip: 'Ir para a página inicial do Bug Search',
                         onPressed: () {
                           Navigator.pushNamed(context, '/');
                         },
@@ -136,7 +162,7 @@ class _SearchPageState extends State<SearchPage> {
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.transparent),
                             ),
-                        child: const BSLogo()),
+                        icon: const BSLogo()),
                     Text(
                       ' |',
                       style: Theme.of(context).textTheme.displayLarge,
@@ -286,68 +312,85 @@ class _SearchPageState extends State<SearchPage> {
           ),
           // RESULTADO DA PESQUISA //
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 190),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Resultados da Web',
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                ),
-              ],
-            ),
-          ),
+
 // ListView //
-/*
-          Flexible(
-            child:  (searchResults != null )?
- ListView.builder(
-    itemCount: searchResults!.searchResults.length,
-    itemBuilder: (BuildContext context, int index) {
-      final result = searchResults!.searchResults[index];
-      return ListTile(
-                  title: Text(
-                    searchResults!.searchResults.,
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+
+          StreamBuilder(
+            stream: fetchDataFromAPI(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                final resultsFromJson = snapshot.data;
+                return Flexible(
+                  child: resultsFromJson.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: resultsFromJson.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            print(resultsFromJson[index]);
+                            final result = resultsFromJson[index];
+                            return Column(
+                              children: [
+                                Text(
+                                  result['title'].toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                      ),
+                                ),
+                                Text(
+                                  result[index].description,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                      ),
+                                ),
+                                Text(
+                                  result[index].url,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                      ),
+                                ),
+                              ],
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Text(
+                            'Nenhum resultado encontrado',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurfaceVariant,
+                                ),
+                          ),
                         ),
-                  ),
-                  subtitle: Text(
-                    searchResults.description,
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                  ),
-                  trailing: Text(
-                    searchResults.url,
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                  ),
                 );
-              },
-            ):
-            Center(
-              child: Text(
-                'Nenhum resultado encontrado',
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-              ),
-            ),
-            
-            
-          ),*/
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ],
       ),
     );

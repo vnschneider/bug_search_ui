@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:core';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class MyJsonData {
@@ -31,7 +33,7 @@ class MyJsonData {
   }
 }
 
-Future<List<MyJsonData>> fetchData(String url) async {
+Future<List<MyJsonData>> fetchData(url) async {
   final response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
     final List<dynamic> jsonDataList = json.decode(response.body);
@@ -41,7 +43,7 @@ Future<List<MyJsonData>> fetchData(String url) async {
   }
 }
 
-Future  getJsonFile(Uri url) async {
+Future<List<Map<String, dynamic>>> getJsonFile(url) async {
   // Define the URL to retrieve JSON data from
 
   // Retrieve the JSON data using the 'http' package
@@ -63,6 +65,22 @@ Future  getJsonFile(Uri url) async {
     });
   }
 
+  return result;
+
   // Print the resulting list
-  print(result);
+}
+
+Future<List<dynamic>> fetchData2(String url) async {
+  // Replace with your actual URL
+
+  final response = await http.get(Uri.parse(url));
+
+  if (response.statusCode == 200) {
+    final jsonData = json.decode(response.body);
+    if (jsonData is List) {
+      return jsonData;
+    }
+  }
+
+  return [];
 }
