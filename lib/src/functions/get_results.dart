@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class MyJsonData {
@@ -77,11 +75,13 @@ Future<List<dynamic>> fetchData2(String url) async {
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
+    var result = <Map<String, dynamic>>[];
+
     print('PRINTING DATA FromAPI - JSON');
     print(data);
     // Filter the data and create a new list with only certain fields
-    var result = <Map<String, dynamic>>[];
-    for (var item in data) {
+
+    for (var item in data['searchResults']) {
       result.add({
         'index': item['index'],
         'guid': item['guid'],
@@ -96,14 +96,6 @@ Future<List<dynamic>> fetchData2(String url) async {
     print(result);
     return result;
 
-    // final List<dynamic> jsonData = json.decode(response.body);
-    // print('PRINTING DATA FromAPI - JSON');
-    //  print(jsonData);
-    //  var result = jsonData.map((e) => MyJsonData.fromJson(e)).toList();
-
-    //  print('PRINTING DATA FromAPI - RESULT');
-    //  print(result);
-    //  return result;
   } else {
     throw Exception('Failed to fetch data');
   }

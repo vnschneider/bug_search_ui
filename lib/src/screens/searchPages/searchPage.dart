@@ -26,7 +26,6 @@ class _SearchPageState extends State<SearchPage> {
   bool _isTapped3 = false;
 
   List<dynamic> resultsFromJson = [];
-  late List results2;
 
   /* Future<void> getJson() async {
     try {
@@ -60,14 +59,10 @@ class _SearchPageState extends State<SearchPage> {
 
   Stream fetchDataFromAPI() async* {
     try {
-      List<dynamic> data = await fetchData2(
+      List data = await fetchData2(
           'http://40.76.148.166/search?q=google'); // Call the fetchData function from api_service.dart
 
-      setState(() {
-        resultsFromJson = data;
-        print('PRINTING DATA FROM FetchDataFromAPI');
-        print(resultsFromJson);
-      });
+      resultsFromJson = data;
     } catch (e) {
       print('Algo deu errado! $e');
     }
