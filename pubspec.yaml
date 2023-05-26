@@ -39,6 +39,7 @@ dependencies:
   bootstrap_icons: ^1.10.2+1
   iconsax: ^0.0.8
   flutter_switch: ^0.3.2
+  http: ^0.13.6
   
 
 dev_dependencies:
