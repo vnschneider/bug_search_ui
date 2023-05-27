@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
   List<dynamic> resultsFromJson = [];
   int resultsLength = 0;
   String searchKey = '';
-  int searchDensity = 30;
+  int searchDensity = 20;
   final _searchController = TextEditingController();
 
   @override
