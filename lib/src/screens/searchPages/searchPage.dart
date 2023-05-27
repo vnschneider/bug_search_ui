@@ -1,14 +1,10 @@
-// ignore_for_file: file_names
-import 'dart:convert';
-
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:bug_search/src/functions/get_results.dart';
 import 'package:bug_search/src/models/bsLogo.dart';
 import 'package:bug_search/src/models/searchBar.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-
 import '../../models/switch_button.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -60,9 +56,12 @@ class _SearchPageState extends State<SearchPage> {
   Stream fetchDataFromAPI() async* {
     try {
       List data = await fetchData2(
-          'http://40.76.148.166/search?q=google'); // Call the fetchData function from api_service.dart
+          'http://40.76.148.166/search?q=github&l=50'); // Call the fetchData function from api_service.dart
 
       resultsFromJson = data;
+      print('PRINTING DATA FROM FETCHDATAFROMAPI');
+      print(resultsFromJson);
+      yield data;
     } catch (e) {
       print('Algo deu errado! $e');
     }
@@ -312,7 +311,7 @@ class _SearchPageState extends State<SearchPage> {
 
           StreamBuilder(
             stream: fetchDataFromAPI(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 final resultsFromJson = snapshot.data;
                 return Flexible(
@@ -320,12 +319,18 @@ class _SearchPageState extends State<SearchPage> {
                       ? ListView.builder(
                           itemCount: resultsFromJson.length,
                           itemBuilder: (BuildContext context, int index) {
-                            print(resultsFromJson[index]);
+                            print('PRINTING RESULTS FROM RESULTS');
+                            //print(resultsFromJson[index]);
                             final result = resultsFromJson[index];
                             return Column(
                               children: [
+                                /* SvgPicture.network(
+                                  snapshot.data[index]['favicon'].toString(),
+                                  height: 32,
+                                  width: 32,
+                                ),*/
                                 Text(
-                                  result['title'].toString(),
+                                  snapshot.data[index]['title'].toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayMedium
@@ -337,7 +342,8 @@ class _SearchPageState extends State<SearchPage> {
                                       ),
                                 ),
                                 Text(
-                                  result[index].description,
+                                  snapshot.data[index]['description']
+                                      .toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayMedium
@@ -349,7 +355,7 @@ class _SearchPageState extends State<SearchPage> {
                                       ),
                                 ),
                                 Text(
-                                  result[index].url,
+                                  snapshot.data[index]['link'].toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayMedium

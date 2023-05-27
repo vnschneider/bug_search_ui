@@ -81,21 +81,20 @@ Future<List<dynamic>> fetchData2(String url) async {
     print(data);
     // Filter the data and create a new list with only certain fields
 
-    for (var item in data['searchResults']) {
+    for (var item in data["searchResults"]) {
       result.add({
         'index': item['index'],
         'guid': item['guid'],
         'link': item['link'],
         'title': item['title'],
         'description': item['description'],
-        'favicon': item['favicon']
+        'favicon': item['favicon'],
       });
     }
 
     print('PRINTING DATA FromAPI - RESULT');
     print(result);
     return result;
-
   } else {
     throw Exception('Failed to fetch data');
   }
