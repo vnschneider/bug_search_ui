@@ -40,6 +40,8 @@ dependencies:
   iconsax: ^0.0.8
   flutter_switch: ^0.3.2
   flutter_svg: ^2.0.5 
+  url_launcher: ^6.1.11
+  url_strategy: ^0.2.0
   
 
 dev_dependencies:

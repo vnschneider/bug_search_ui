@@ -16,6 +16,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isSwitched = false;
   bool buttonHover = false;
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +77,28 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              const CustomSearchBar(height: 52, width: 660),
+
+              CustomSearchBar(
+                  searchController: _searchController,
+                  onSubmitted: (value) {
+                    if (value.isNotEmpty) {
+                      Navigator.pushNamed(context, 'search', arguments: value);
+                      _searchController.clear;
+                    } else {
+                      return;
+                    }
+                  },
+                  onPress: () {
+                    if (_searchController.text.isNotEmpty) {
+                      Navigator.pushNamed(context, 'search',
+                          arguments: _searchController.text);
+                      _searchController.clear;
+                    } else {
+                      return;
+                    }
+                  },
+                  height: 52,
+                  width: 660),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
