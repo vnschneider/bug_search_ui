@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                   searchController: _searchController,
                   onSubmitted: (value) {
                     if (value.isNotEmpty) {
-                      Navigator.pushNamed(context, 'search', arguments: value);
+                      Navigator.pushNamed(context, '/search', arguments: value);
                       _searchController.clear;
                     } else {
                       return;
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   onPress: () {
                     if (_searchController.text.isNotEmpty) {
-                      Navigator.pushNamed(context, 'search',
+                      Navigator.pushNamed(context, '/search',
                           arguments: _searchController.text);
                       _searchController.clear;
                     } else {

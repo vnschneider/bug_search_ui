@@ -42,6 +42,7 @@ dependencies:
   flutter_svg: ^2.0.5 
   url_launcher: ^6.1.11
   url_strategy: ^0.2.0
+  web_smooth_scroll: ^1.1.0
   
 
 dev_dependencies:

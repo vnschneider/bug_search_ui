@@ -9,7 +9,7 @@ import '../screens/searchPages/homePage.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   '/': (context) => const HomePage(),
-  'search': (context) => const SearchPage(),
+  '/search': (context) => const SearchPage(),
   'fordev/overview': (context) => const OverViewPage(),
   'fordev/documentation': (context) => const DocumentationPage(),
   'fordev/database': (context) => const DataBasePage(),
