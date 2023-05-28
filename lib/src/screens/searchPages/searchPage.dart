@@ -73,10 +73,8 @@ class _SearchPageState extends State<SearchPage> {
     if (searchDensityChanged == true) {
       setState(() {
         fetchDataFromAPI();
-        print('Atualizando com o novo valor de densidade');
       });
       searchDensityChanged = false;
-      print('O valor da densidade mudou: $searchDensityChanged');
     }
   }
 
@@ -220,9 +218,6 @@ class _SearchPageState extends State<SearchPage> {
                           setState(() {
                             searchDensityValue = newsearchDensityValue;
                             searchDensityChanged = true;
-                            print(
-                                'O valor da densidade mudou: $searchDensityChanged');
-                            // getSearchValue(searchKey);
                           });
                         },
                       ),
