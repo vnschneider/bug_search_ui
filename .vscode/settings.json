@@ -18,5 +18,6 @@
         "titleBar.inactiveBackground": "#4766ea99",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "4766EA"
+    "peacock.color": "4766EA",
+    "cmake.sourceDirectory": "C:/Users/mrsch/Documentos/GitHub/bug_search_ui/linux"
 }
