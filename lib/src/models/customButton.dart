@@ -39,7 +39,6 @@ class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      
         onHover: (bool value) {
           setState(() {
             if (value) {
@@ -50,31 +49,44 @@ class _CustomButtonState extends State<CustomButton> {
           });
         },
         style: Theme.of(context).textButtonTheme.style,
-        onPressed: 
-          widget.function,
+        onPressed: widget.function,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: widget.isIconButton
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      icon,
-                      size: 24,
-                      color: const Color(0xffFAFAFB),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
+              ? SizedBox(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    textDirection: TextDirection.ltr,
+                    verticalDirection: VerticalDirection.down,
+                    children: [
+                      Icon(
+                        icon,
+                        size: 24,
+                        color: const Color(0xffFAFAFB),
+                      ),
+                      const SizedBox(width: 8),
+                      FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(
+                          widget.text,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
                       widget.text,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                  ],
-                )
-              : Text(
-                  widget.text,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  ),
                 ),
         ));
   }

@@ -71,63 +71,73 @@ class _SearchPageState extends State<SearchPage> {
       print('Algo deu errado! $e');
     }
     if (searchDensityChanged == true) {
-      fetchDataFromAPI();
-      print('Atualizando com o novo valor de densidade');
+      setState(() {
+        fetchDataFromAPI();
+        print('Atualizando com o novo valor de densidade');
+      });
       searchDensityChanged = false;
       print('O valor da densidade mudou: $searchDensityChanged');
     }
   }
 
   void _toggleTap() {
-    setState(() {
-      _isTapped = !_isTapped;
-      if (_isTapped) {
-        _isTapped1 = false;
-        _isTapped2 = false;
-        _isTapped3 = false;
-      } else if (!_isTapped) {
-        _isTapped = true;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        _isTapped = !_isTapped;
+        if (_isTapped) {
+          _isTapped1 = false;
+          _isTapped2 = false;
+          _isTapped3 = false;
+        } else if (!_isTapped) {
+          _isTapped = true;
+        }
+      });
+    }
   }
 
   void _toggleTap1() {
-    setState(() {
-      _isTapped1 = !_isTapped1;
-      if (_isTapped1) {
-        _isTapped = false;
-        _isTapped2 = false;
-        _isTapped3 = false;
-      } else if (!_isTapped1) {
-        _isTapped1 = true;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        _isTapped1 = !_isTapped1;
+        if (_isTapped1) {
+          _isTapped = false;
+          _isTapped2 = false;
+          _isTapped3 = false;
+        } else if (!_isTapped1) {
+          _isTapped1 = true;
+        }
+      });
+    }
   }
 
   void _toggleTap2() {
-    setState(() {
-      _isTapped2 = !_isTapped2;
-      if (_isTapped2) {
-        _isTapped = false;
-        _isTapped1 = false;
-        _isTapped3 = false;
-      } else if (!_isTapped2) {
-        _isTapped2 = true;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        _isTapped2 = !_isTapped2;
+        if (_isTapped2) {
+          _isTapped = false;
+          _isTapped1 = false;
+          _isTapped3 = false;
+        } else if (!_isTapped2) {
+          _isTapped2 = true;
+        }
+      });
+    }
   }
 
   void _toggleTap3() {
-    setState(() {
-      _isTapped3 = !_isTapped3;
-      if (_isTapped3) {
-        _isTapped = false;
-        _isTapped1 = false;
-        _isTapped2 = false;
-      } else if (!_isTapped3) {
-        _isTapped3 = true;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        _isTapped3 = !_isTapped3;
+        if (_isTapped3) {
+          _isTapped = false;
+          _isTapped1 = false;
+          _isTapped2 = false;
+        } else if (!_isTapped3) {
+          _isTapped3 = true;
+        }
+      });
+    }
   }
 
   @override
@@ -168,34 +178,39 @@ class _SearchPageState extends State<SearchPage> {
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.transparent),
                                   ),
-                          icon: const BSLogo()),
+                          icon: const Hero(tag: 'logo', child: BSLogo())),
                       Text(
                         ' |',
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
-                      CustomSearchBar(
-                          searchController: _searchController,
-                          onSubmitted: (value) {
-                            if (value.isNotEmpty) {
-                              Navigator.pushNamed(context, '/search',
-                                  arguments: value);
-                              _searchController.clear;
-                            } else {
-                              return;
-                            }
-                          },
-                          onPress: () {
-                            if (_searchController.text.isNotEmpty) {
-                              Navigator.pushNamed(context, '/search',
-                                  arguments: _searchController.text);
-                              _searchController.clear;
-                            } else {
-                              return;
-                            }
-                          },
-                          height: 48,
-                          width: MediaQuery.of(context).size.width * 0.4),
+                      Hero(
+                        tag: 'searchBar',
+                        child: CustomSearchBar(
+                            searchController: _searchController,
+                            onSubmitted: (value) {
+                              if (value.isNotEmpty) {
+                                Navigator.pushNamed(context, '/search',
+                                    arguments: value);
+                                _searchController.clear;
+                              } else {
+                                return;
+                              }
+                            },
+                            onPress: () {
+                              if (_searchController.text.isNotEmpty) {
+                                Navigator.pushNamed(context, '/search',
+                                    arguments: _searchController.text);
+                                _searchController.clear;
+                              } else {
+                                return;
+                              }
+                            },
+                            height: 48,
+                            width: MediaQuery.of(context).size.width * 0.4),
+                      ),
                       Slider(
+                        inactiveColor: Theme.of(context).colorScheme.surface,
+                        activeColor: Theme.of(context).colorScheme.primary,
                         value: searchDensityValue,
                         min: 20,
                         max: 100,
@@ -213,32 +228,43 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      IconButton(
-                        tooltip: 'Favoritos',
-                        hoverColor: Theme.of(context).colorScheme.secondary,
-                        highlightColor: Theme.of(context).colorScheme.tertiary,
-                        isSelected: onClick,
-                        selectedIcon: const Icon(BootstrapIcons.bookmark_fill),
-                        onPressed: () {
-                          setState(() {
-                            onClick = !onClick;
-                          });
-                        },
-                        icon: const Icon(BootstrapIcons.bookmark),
-                      ),
-                      const SizedBox(width: 40),
-                      customSwitchButton(
-                          (p0) => {
-                                setState(() {
-                                  isSwitched = p0;
-                                })
-                              },
-                          isSwitched,
-                          48,
-                          88),
-                    ],
+                  Flexible(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Hero(
+                          tag: 'button',
+                          child: IconButton(
+                            tooltip: 'Favoritos',
+                            hoverColor: Theme.of(context).colorScheme.secondary,
+                            highlightColor:
+                                Theme.of(context).colorScheme.tertiary,
+                            isSelected: onClick,
+                            selectedIcon:
+                                const Icon(BootstrapIcons.bookmark_fill),
+                            onPressed: () {
+                              setState(() {
+                                onClick = !onClick;
+                              });
+                            },
+                            icon: const Icon(BootstrapIcons.bookmark),
+                          ),
+                        ),
+                        const SizedBox(width: 40),
+                        Hero(
+                          tag: 'switch',
+                          child: customSwitchButton(
+                              (p0) => {
+                                    setState(() {
+                                      isSwitched = p0;
+                                    })
+                                  },
+                              isSwitched,
+                              48,
+                              88),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -378,10 +404,10 @@ class _SearchPageState extends State<SearchPage> {
 
           // ListView //
           StreamBuilder(
-            stream: fetchDataFromAPI(),
+            stream: fetchDataFromAPI().asBroadcastStream(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                final resultsFromJson = snapshot.data;
+                //final resultsFromJson = snapshot.data;
                 return resultsFromJson.isNotEmpty
                     ? WebSmoothScroll(
                         controller: _scrollController,
@@ -436,7 +462,7 @@ class _SearchPageState extends State<SearchPage> {
                                             ),
                                         onPressed: () async {
                                           await openUrl(
-                                              snapshot.data[index]['link']);
+                                              resultsFromJson[index]['link']);
                                         },
                                         child: Column(
                                           mainAxisAlignment:
@@ -459,11 +485,11 @@ class _SearchPageState extends State<SearchPage> {
                                                           .primary,
                                                   radius: 14,
                                                   child: Text(
-                                                      snapshot.data[index]
+                                                      resultsFromJson[index]
                                                                   ['title']
                                                               .toString()
                                                               .isNotEmpty
-                                                          ? '${snapshot.data[index]['title'].toString().substring(0, 1).toUpperCase()}, ${snapshot.data[index]['title'].toString().substring(1, 2).toUpperCase()}'
+                                                          ? '${resultsFromJson[index]['title'].toString().substring(0, 1).toUpperCase()}, ${resultsFromJson[index]['title'].toString().substring(1, 2).toUpperCase()}'
                                                           : 'N/A',
                                                       style: Theme.of(context)
                                                           .textTheme
@@ -481,7 +507,8 @@ class _SearchPageState extends State<SearchPage> {
                                                 const SizedBox(width: 10),
                                                 SizedBox(
                                                   child: Text(
-                                                    snapshot.data[index]['link']
+                                                    resultsFromJson[index]
+                                                            ['link']
                                                         .toString(),
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -504,10 +531,10 @@ class _SearchPageState extends State<SearchPage> {
                                             const SizedBox(height: 8),
                                             SizedBox(
                                               child: Text(
-                                                snapshot.data[index]['title']
+                                                resultsFromJson[index]['title']
                                                             .toString() !=
                                                         'null'
-                                                    ? snapshot.data[index]
+                                                    ? resultsFromJson[index]
                                                             ['title']
                                                         .toString()
                                                     : 'N/A',
@@ -531,10 +558,10 @@ class _SearchPageState extends State<SearchPage> {
                                       const SizedBox(height: 8),
                                       SizedBox(
                                         child: Text(
-                                          snapshot.data[index]['description']
+                                          resultsFromJson[index]['description']
                                                       .toString() !=
                                                   'null'
-                                              ? snapshot.data[index]
+                                              ? resultsFromJson[index]
                                                       ['description']
                                                   .toString()
                                               : 'N/A',
