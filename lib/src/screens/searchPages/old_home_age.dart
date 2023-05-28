@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// NO RESPONSIVE SCREEN //
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:bug_search/src/models/bsLogo.dart';
 import 'package:bug_search/src/models/customButton.dart';

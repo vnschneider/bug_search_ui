@@ -1,3 +1,4 @@
+// NO RESPONSIVE SCREEN //
 // ignore_for_file: file_names, avoid_print
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:bug_search/src/functions/get_results.dart';
