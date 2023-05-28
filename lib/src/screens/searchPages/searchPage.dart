@@ -60,7 +60,7 @@ class _SearchPageState extends State<SearchPage> {
   Stream fetchDataFromAPI() async* {
     try {
       List data = await fetchData2(
-          'http://20.124.139.217/search?q=google'); // Call the fetchData function from api_service.dart
+          'http://20.88.160.141/search?q=google'); // Call the fetchData function from api_service.dart
 
       resultsFromJson = data;
     } catch (e) {
