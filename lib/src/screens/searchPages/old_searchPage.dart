@@ -157,6 +157,7 @@ class _SearchPageState extends State<SearchPage> {
         curve: Curves.easeInOutCirc, // curve of the animation
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
           controller: _scrollController,
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -194,10 +195,6 @@ class _SearchPageState extends State<SearchPage> {
                                               Colors.transparent),
                                     ),
                                 icon: const Hero(tag: 'logo', child: BSLogo())),
-                            Text(
-                              ' |',
-                              style: Theme.of(context).textTheme.displayLarge,
-                            ),
                             Hero(
                               tag: 'searchBar',
                               child: CustomSearchBar(
@@ -386,76 +383,64 @@ class _SearchPageState extends State<SearchPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 190),
                     child: Row(
                       children: [
-                        if (searchKey.isNotEmpty)
-                          Text.rich(
-                            TextSpan(
-                              text: 'Aproximadamente ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurfaceVariant,
-                                  ),
-                              children: [
-                                TextSpan(
-                                  text: '${resultsLength.toString()} ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w900,
-                                        // fontSize: 14,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                      ),
-                                ),
-                                TextSpan(
-                                  text:
-                                      'resultados encontrados para: ${searchKey.toString()}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          )
-                        else if (searchKey.toString() != '' &&
-                            resultsLength == 0)
-                          Text(
-                            'Nenhum resultado encontrado para: ${searchKey.toString()}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          )
-                        else
-                          Text(
-                            'Insira um termo para pesquisar',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
+                        searchKey.isEmpty
+                            ? Text(
+                                'Insira um termo para pesquisar',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              )
+                            : searchKey.isNotEmpty
+                                ? Text.rich(
+                                    TextSpan(
+                                      text: '${resultsLength.toString()} ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w900,
+                                            // fontSize: 14,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurfaceVariant,
+                                          ),
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              'resultados encontrados para: ${searchKey.toString()}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurfaceVariant,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : resultsLength == 0
+                                    ? Text(
+                                        'Nenhum resultado encontrado para: ${searchKey.toString()}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurfaceVariant,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      )
+                                    : const SizedBox(),
                       ],
                     ),
                   ),

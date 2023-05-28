@@ -1,4 +1,3 @@
-
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:bug_search/src/models/bsLogo.dart';
 import 'package:bug_search/src/models/customButton.dart';
@@ -84,7 +83,7 @@ class _BugSearchUIWebState extends State<BugSearchUIWeb> {
                 children: [
                   const Hero(tag: 'logo', child: BSLogo()),
                   Text(
-                    ' / Bug Search',
+                    '/ Bug Search',
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ],
