@@ -1,11 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'mobileLayout/home_page_mobile.dart';
+import 'old_searchPage.dart';
+import 'mobileLayout/search_page_mobile.dart';
 import 'tabletLayout/home_page_tablet.dart';
 import 'webLayout/home_page_web.dart';
-
 
 class HomePageUI extends StatelessWidget {
   const HomePageUI({super.key});
@@ -18,7 +17,6 @@ class HomePageUI extends StatelessWidget {
         tablet: (p0) => const BugSearchUITablet(),
         desktop: (p0) => const BugSearchUIWeb(),
       ),
-      
     );
   }
 }
@@ -30,11 +28,10 @@ class SearchPageUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) => ScreenTypeLayout.builder(
-        mobile: (p0) => const BugSearchUIMobile(),
-        tablet: (p0) => const BugSearchUITablet(),
-        desktop: (p0) => const BugSearchUIWeb(),
+        mobile: (p0) => const SearchPageMobile(),
+        tablet: (p0) => const SearchPage(),
+        desktop: (p0) => const SearchPage(),
       ),
-      
     );
   }
 }

@@ -1,5 +1,6 @@
+import 'package:bug_search/src/models/bs_logo_mobile.dart';
+import 'package:bug_search/src/models/custom_searchbar_mobile.dart';
 import 'package:flutter/material.dart';
-import '../../../models/searchBar.dart';
 
 class BugSearchUIMobile extends StatefulWidget {
   const BugSearchUIMobile({super.key});
@@ -35,24 +36,47 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Hero(
-                        tag: 'logo',
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Bug Search',
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
+                      FittedBox(
+                        fit: BoxFit.contain,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Hero(
+                              tag: 'logo',
+                              transitionOnUserGestures: true,
+                              child: BSLogoMobile(fontsize: 40),
+                            ),
+                            Text(
+                              '/ ',
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge
+                                  ?.copyWith(
+                                    fontSize: 30,
+                                  ),
+                            ),
+                            Text(
+                              'Bug Search',
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge
+                                  ?.copyWith(
+                                    fontSize: 40,
+                                  ),
+                            ),
+                          ],
                         ),
                       )
                     ],
                   ),
                 ),
-
+                const SizedBox(height: 10),
                 Hero(
                   tag: 'searchBar',
-                  child: CustomSearchBar(
+                  child: CustomSearchBarMobile(
                       searchController: _searchController,
                       onSubmitted: (value) {
                         if (value.isNotEmpty) {
@@ -72,7 +96,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                           return;
                         }
                       },
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.05,
                       width: MediaQuery.of(context).size.width * 0.8),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
@@ -96,6 +120,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                   .titleMedium
                                   ?.copyWith(
                                     fontWeight: FontWeight.w500,
+                                    fontSize: 14,
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSurfaceVariant,
@@ -108,6 +133,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                       .titleMedium
                                       ?.copyWith(
                                         fontWeight: FontWeight.w800,
+                                        fontSize: 14,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .onSurfaceVariant,
@@ -122,6 +148,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                         color: Theme.of(context)
                                             .colorScheme
                                             .onSurfaceVariant,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
                                 ),
@@ -155,6 +182,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                       .titleMedium
                                       ?.copyWith(
                                         fontWeight: FontWeight.w800,
+                                        fontSize: 14,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .onSurfaceVariant,
@@ -169,6 +197,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                         color: Theme.of(context)
                                             .colorScheme
                                             .onSurfaceVariant,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
                                 ),

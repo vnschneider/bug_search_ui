@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const Hero(tag: 'logo', child: BSLogo()),
                   Text(
-                    ' | Bug Search',
+                    ' / Bug Search',
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ],
