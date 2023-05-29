@@ -101,11 +101,11 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Row(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text.rich(
                         TextSpan(
@@ -133,7 +133,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                   ),
                             ),
                             TextSpan(
-                              text: 'sites indexados, e mais de ',
+                              text: 'sites indexados, e mais de',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -145,19 +145,21 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
-                            TextSpan(
-                              text: 'XXX ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
+                          ],
+                        ),
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          text: 'XXX ',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 14,
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSurfaceVariant,
                                   ),
-                            ),
+                          children: [
                             TextSpan(
                               text: 'termos no dicionário.',
                               style: Theme.of(context)

@@ -72,7 +72,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
         surfaceTintColor: Theme.of(context).colorScheme.onSurface,
         shadowColor: Theme.of(context).colorScheme.primary,
         automaticallyImplyLeading: false,
-        toolbarHeight: 138,
+        toolbarHeight: 140,
         flexibleSpace: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
@@ -151,8 +151,12 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
       body: SingleChildScrollView(
         child: SizedBox(
           height: resultsFromJson.length >= 5
-              ? MediaQuery.of(context).size.height * 4
-              : MediaQuery.of(context).size.height,
+              ? MediaQuery.of(context).size.height * 2
+              : resultsFromJson.length >= 10
+                  ? MediaQuery.of(context).size.height * 4
+                  : resultsFromJson.length >= 15
+                      ? MediaQuery.of(context).size.height * 8
+                      : MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -169,7 +173,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                   searchKey.isEmpty
                       ? 'Insira um termo para buscar'
                       : resultsLength == 0
-                          ? 'Nenhum resultado para: $searchKey'
+                          ? 'Nenhum resultado encontrado para: $searchKey'
                           : '$resultsLength resultados para: $searchKey',
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
@@ -221,7 +225,12 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                       await openUrl(
                                           resultsFromJson[index]['link']);
                                     },
-                                    child: SizedBox(
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                      ),
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
                                       child: Column(
@@ -229,7 +238,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
                                           SizedBox(
                                             child: Row(
@@ -237,7 +246,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                                   MainAxisAlignment.start,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
-                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisSize: MainAxisSize.min,
                                               textDirection: TextDirection.ltr,
                                               children: [
                                                 SizedBox(
@@ -258,29 +267,38 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: [
-                                                    Text(
-                                                      resultsFromJson[index]
-                                                                      ['link']
-                                                                  .toString() !=
-                                                              'null'
-                                                          ? resultsFromJson[
-                                                                  index]['link']
-                                                              .toString()
-                                                          : 'N/A',
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .displayMedium
-                                                          ?.copyWith(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .onSurfaceVariant,
-                                                          ),
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.8,
+                                                      child: Text(
+                                                        resultsFromJson[index]
+                                                                        ['link']
+                                                                    .toString() !=
+                                                                'null'
+                                                            ? resultsFromJson[
+                                                                        index]
+                                                                    ['link']
+                                                                .toString()
+                                                            : 'N/A',
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .displayMedium
+                                                            ?.copyWith(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onSurfaceVariant,
+                                                            ),
+                                                      ),
                                                     ),
                                                     SizedBox(
                                                       width:
@@ -322,6 +340,10 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                           ),
                                           const SizedBox(height: 8),
                                           SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.8,
                                             child: Text(
                                               resultsFromJson[index]
                                                               ['description']

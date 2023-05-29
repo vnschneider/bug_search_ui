@@ -113,5 +113,8 @@ fonts:
     - family: PaytoneOne
       fonts:
         - asset: assets/Fonts/PaytoneOne-Regular.ttf
+    - family: Iconsax
+      fonts:
+       - asset: fonts/iconsax.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

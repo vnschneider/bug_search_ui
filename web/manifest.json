@@ -1,11 +1,11 @@
 {
-    "name": "bug_search",
-    "short_name": "bug_search",
+    "name": "BugSearch",
+    "short_name": "BS",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Melhor que o Google?.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
@@ -31,5 +31,14 @@
             "type": "image/png",
             "purpose": "maskable"
         }
+    ],
+    
+
+    "fonts": [
+        {
+            "asset":"fonts/iconsax.ttf",
+            "family":"Iconsax"
+        }
     ]
+        
 }
