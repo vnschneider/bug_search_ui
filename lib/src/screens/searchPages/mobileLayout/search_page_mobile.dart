@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:bug_search/src/models/custom_searchbar_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 import '../../../functions/get_results.dart';
 import '../../../functions/url_launcher.dart';
 
@@ -19,9 +20,19 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
   int resultsLength = 0;
   final _searchController = TextEditingController();
   List<dynamic> resultsFromJson = [];
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    fetchDataFromAPI();
+    // initialize scroll controllers
+    _scrollController = ScrollController();
+    super.initState();
+  }
 
   @override
   void dispose() {
+    _searchController.dispose();
     _searchController.dispose();
     super.dispose();
   }
@@ -148,99 +159,102 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: resultsFromJson.length >= 5
-              ? MediaQuery.of(context).size.height * 2
-              : resultsFromJson.length >= 10
-                  ? MediaQuery.of(context).size.height * 4
-                  : resultsFromJson.length >= 15
-                      ? MediaQuery.of(context).size.height * 10
-                      : resultsFromJson.length >= 20
-                          ? MediaQuery.of(context).size.height * 25
-                          : MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Divider(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.05),
-                child: Text(
-                  searchKey.isEmpty
-                      ? 'Insira um termo para buscar'
-                      : resultsLength == 0
-                          ? 'Nenhum resultado encontrado para: $searchKey'
-                          : '$resultsLength resultados para: $searchKey',
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+      body: WebSmoothScroll(
+        controller: _scrollController,
+        scrollOffset: 100, // additional offset to users scroll input
+        animationDuration:
+            500, // duration of animation of scroll in milliseconds
+        curve: Curves.easeInOutCirc, // curve of the animation
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          controller: _scrollController,
+          child: SizedBox(
+            height: resultsFromJson.length >= 5
+                ? MediaQuery.of(context).size.height * 2
+                : resultsFromJson.length >= 10
+                    ? MediaQuery.of(context).size.height * 4
+                    : resultsFromJson.length >= 15
+                        ? MediaQuery.of(context).size.height * 15
+                        : resultsFromJson.length >= 20
+                            ? MediaQuery.of(context).size.height * 30
+                            : MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Divider(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.05),
+                  child: Text(
+                    searchKey.isEmpty
+                        ? 'Insira um termo para buscar'
+                        : resultsLength == 0
+                            ? 'Nenhum resultado encontrado para: $searchKey'
+                            : '$resultsLength resultados para: $searchKey',
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                ),
 
-              const SizedBox(height: 10),
-              //const SizedBox(height: 16),
-              FutureBuilder(
-                future: fetchDataFromAPI(),
-                builder: (context, snapshot) {
-                  if (resultsFromJson.isNotEmpty) {
-                    //final resultsFromJson = snapshot.data;
-                    return resultsFromJson.isNotEmpty
-                        ? SizedBox(
-                            child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: resultsFromJson.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 12),
-                                  child: TextButton(
-                                    style: Theme.of(context)
-                                        .textButtonTheme
-                                        .style
-                                        ?.copyWith(
-                                          padding: MaterialStateProperty.all<
-                                              EdgeInsets>(EdgeInsets.zero),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .surface,
+                const SizedBox(height: 10),
+                //const SizedBox(height: 16),
+                FutureBuilder(
+                  future: fetchDataFromAPI(),
+                  builder: (context, snapshot) {
+                    if (resultsFromJson.isNotEmpty) {
+                      //final resultsFromJson = snapshot.data;
+                      return resultsFromJson.isNotEmpty
+                          ? Flexible(
+                              child: ListView.builder(
+                                // scrollDirection: Axis.vertical,
+                                itemCount: resultsFromJson.length,
+                                //  shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 12),
+                                    child: TextButton(
+                                      style: Theme.of(context)
+                                          .textButtonTheme
+                                          .style
+                                          ?.copyWith(
+                                            padding: MaterialStateProperty.all<
+                                                EdgeInsets>(EdgeInsets.zero),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .surface,
+                                            ),
+                                            overlayColor: MaterialStateProperty
+                                                .all<Color>(
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .surface,
+                                            ),
                                           ),
-                                          overlayColor:
-                                              MaterialStateProperty.all<Color>(
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .surface,
-                                          ),
-                                        ),
-                                    onPressed: () async {
-                                      await openUrl(
-                                          resultsFromJson[index]['link']);
-                                    },
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                      ),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
+                                      onPressed: () async {
+                                        await openUrl(
+                                            resultsFromJson[index]['link']);
+                                      },
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisSize: MainAxisSize.max,
                                         children: [
                                           SizedBox(
                                             child: Row(
@@ -248,7 +262,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                                   MainAxisAlignment.start,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
-                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisSize: MainAxisSize.max,
                                               textDirection: TextDirection.ltr,
                                               children: [
                                                 SizedBox(
@@ -373,36 +387,36 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                         ],
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                        : Center(
-                            child: Text(
-                              'Nenhum resultado encontrado',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurfaceVariant,
-                                  ),
-                            ),
-                          );
-                  } else {
-                    return const Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ],
+                                  );
+                                },
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                'Nenhum resultado encontrado',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                    ),
+                              ),
+                            );
+                    } else {
+                      return const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
