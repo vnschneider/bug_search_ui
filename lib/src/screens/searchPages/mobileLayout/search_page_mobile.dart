@@ -272,7 +272,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.8,
+                                                              0.75,
                                                       child: Text(
                                                         resultsFromJson[index]
                                                                         ['link']
@@ -305,7 +305,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.8,
+                                                              0.75,
                                                       child: Text(
                                                         resultsFromJson[index][
                                                                         'title']
@@ -343,7 +343,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.8,
+                                                0.75,
                                             child: Text(
                                               resultsFromJson[index]
                                                               ['description']
