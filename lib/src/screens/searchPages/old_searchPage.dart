@@ -453,8 +453,8 @@ class _SearchPageState extends State<SearchPage> {
                 // ListView //
                 FutureBuilder(
                   future: fetchDataFromAPI(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
+                  builder: (context, snapshot) {
+                    if (resultsFromJson.isNotEmpty) {
                       return resultsFromJson.isNotEmpty
                           ? SizedBox(
                               height: MediaQuery.of(context).size.height * 0.78,

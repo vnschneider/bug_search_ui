@@ -155,8 +155,10 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
               : resultsFromJson.length >= 10
                   ? MediaQuery.of(context).size.height * 4
                   : resultsFromJson.length >= 15
-                      ? MediaQuery.of(context).size.height * 8
-                      : MediaQuery.of(context).size.height,
+                      ? MediaQuery.of(context).size.height * 10
+                      : resultsFromJson.length >= 20
+                          ? MediaQuery.of(context).size.height * 25
+                          : MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -189,7 +191,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
               FutureBuilder(
                 future: fetchDataFromAPI(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
+                  if (resultsFromJson.isNotEmpty) {
                     //final resultsFromJson = snapshot.data;
                     return resultsFromJson.isNotEmpty
                         ? SizedBox(
@@ -272,7 +274,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.75,
+                                                              0.8,
                                                       child: Text(
                                                         resultsFromJson[index]
                                                                         ['link']
@@ -305,7 +307,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.75,
+                                                              0.8,
                                                       child: Text(
                                                         resultsFromJson[index][
                                                                         'title']
@@ -343,7 +345,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.75,
+                                                0.8,
                                             child: Text(
                                               resultsFromJson[index]
                                                               ['description']
