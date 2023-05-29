@@ -32,10 +32,10 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
     }
   }
 
-  Stream fetchDataFromAPI() async* {
+  Future fetchDataFromAPI() async {
     try {
       List data = await fetchData2(
-          'http://40.76.148.166/search?q=$searchKey&l=${searchDensityValue.toString()}');
+          'http://api-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}');
 
       setState(() {
         resultsFromJson = data;
@@ -44,7 +44,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
       //print('PRINTING DATA FROM FETCHDATAFROMAPI');
       // print(resultsFromJson);
       // searchLength = data.length;
-      yield data;
+      return data;
     } catch (e) {
       print('Algo deu errado! $e');
     }
@@ -145,61 +145,67 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                 ),
                 const SizedBox(height: 10),
                 //const SizedBox(height: 16),
-                StreamBuilder(
-                  stream: fetchDataFromAPI(),
+                FutureBuilder(
+                  future: fetchDataFromAPI(),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        //final resultsFromJson = snapshot.data;
-                        return resultsFromJson.isNotEmpty
-                            ? SizedBox(
-                                child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: resultsFromJson.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return Card(
-                                      child: Column(
-                                        children: [
-                                          ListTile(
-                                            title: Text(
-                                              resultsFromJson[index]['link']
-                                                          .toString() !=
-                                                      'null'
-                                                  ? resultsFromJson[index]
-                                                          ['link']
-                                                      .toString()
-                                                  : 'N/A',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium
-                                                  ?.copyWith(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                            subtitle: Text(
-                                              resultsFromJson[index]['title']
-                                                          .toString() !=
-                                                      'null'
-                                                  ? resultsFromJson[index]
-                                                          ['title']
-                                                      .toString()
-                                                  : 'N/A',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displaySmall
-                                                  ?.copyWith(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onSurfaceVariant,
-                                                  ),
-                                            ),
+                    if (snapshot.hasData) {
+                      //final resultsFromJson = snapshot.data;
+                      return resultsFromJson.isNotEmpty
+                          ? SizedBox(
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: resultsFromJson.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .surface),
+                                    ),
+                                    onPressed: () {},
+                                    child: Column(
+                                      children: [
+                                        ListTile(
+                                          title: Text(
+                                            resultsFromJson[index]['link']
+                                                        .toString() !=
+                                                    'null'
+                                                ? resultsFromJson[index]['link']
+                                                    .toString()
+                                                : 'N/A',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displayMedium
+                                                ?.copyWith(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
+                                          subtitle: Text(
+                                            resultsFromJson[index]['title']
+                                                        .toString() !=
+                                                    'null'
+                                                ? resultsFromJson[index]
+                                                        ['title']
+                                                    .toString()
+                                                : 'N/A',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall
+                                                ?.copyWith(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                                ),
+                                          ),
+                                        ),
 
-                                          /*SizedBox(
+                                        /*SizedBox(
                                             height: 200,
                                             child: Image.network(
                                               resultsFromJson[index]['imageUrl']
@@ -212,60 +218,53 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                                               fit: BoxFit.cover,
                                             ),
                                           ),*/
-                                          const SizedBox(height: 8),
-                                          SizedBox(
-                                            child: Text(
-                                              resultsFromJson[index]
-                                                              ['description']
-                                                          .toString() !=
-                                                      'null'
-                                                  ? resultsFromJson[index]
-                                                          ['description']
-                                                      .toString()
-                                                  : 'N/A',
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 3,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displaySmall
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 12,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onSurfaceVariant,
-                                                  ),
-                                            ),
+                                        const SizedBox(height: 8),
+                                        SizedBox(
+                                          child: Text(
+                                            resultsFromJson[index]
+                                                            ['description']
+                                                        .toString() !=
+                                                    'null'
+                                                ? resultsFromJson[index]
+                                                        ['description']
+                                                    .toString()
+                                                : 'N/A',
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 3,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                                ),
                                           ),
-                                          const SizedBox(height: 12),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : Center(
-                                child: Text(
-                                  'Nenhum resultado encontrado',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayMedium
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                      ),
-                                ),
-                              );
-                      } else {
-                        return const Expanded(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
+                                        ),
+                                        const SizedBox(height: 12),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                'Nenhum resultado encontrado',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                    ),
+                              ),
+                            );
                     } else {
                       return const Expanded(
                         child: Center(

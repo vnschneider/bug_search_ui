@@ -55,10 +55,10 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  Stream fetchDataFromAPI() async* {
+  Future fetchDataFromAPI() async {
     try {
       List data = await fetchData2(
-          'http://40.76.148.166/search?q=$searchKey&l=${searchDensityValue.toString()}');
+          'http://api-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}');
 
       setState(() {
         resultsFromJson = data;
@@ -67,7 +67,7 @@ class _SearchPageState extends State<SearchPage> {
       //print('PRINTING DATA FROM FETCHDATAFROMAPI');
       // print(resultsFromJson);
       // searchLength = data.length;
-      yield data;
+      return data;
     } catch (e) {
       print('Algo deu errado! $e');
     }
@@ -448,8 +448,8 @@ class _SearchPageState extends State<SearchPage> {
                   const SizedBox(height: 30),
 
                   // ListView //
-                  StreamBuilder(
-                    stream: fetchDataFromAPI().asBroadcastStream(),
+                  FutureBuilder(
+                    future: fetchDataFromAPI(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         //final resultsFromJson = snapshot.data;
