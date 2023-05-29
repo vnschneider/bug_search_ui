@@ -92,7 +92,7 @@ class _CustomSearchBarMobileState extends State<CustomSearchBarMobile> {
                                   Theme.of(context).colorScheme.secondary,
                               highlightColor:
                                   Theme.of(context).colorScheme.tertiary,
-                              iconSize: 20,
+                              iconSize: 18,
                               onPressed: () {
                                 _clearText();
                               },
@@ -108,7 +108,7 @@ class _CustomSearchBarMobileState extends State<CustomSearchBarMobile> {
                                   .textTheme
                                   .displayLarge
                                   ?.copyWith(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     color:
                                         Theme.of(context).colorScheme.surface,
                                   ),
@@ -121,7 +121,7 @@ class _CustomSearchBarMobileState extends State<CustomSearchBarMobile> {
                   IconButton(
                     alignment: Alignment.center,
                     tooltip: 'Pesquisar',
-                    iconSize: 20,
+                    iconSize: 18,
                     hoverColor: Theme.of(context).colorScheme.secondary,
                     highlightColor: Theme.of(context).colorScheme.tertiary,
                     onPressed: widget.onPress,
@@ -139,9 +139,7 @@ class _CustomSearchBarMobileState extends State<CustomSearchBarMobile> {
               hintStyle: GoogleFonts.poppins(
                 textStyle: Theme.of(context).textTheme.headlineMedium,
                 fontSize: 14,
-                //fontStyle: FontStyle.italic,
               ),
-              //labelStyle: const TextStyle(height: 1),
             ),
           ),
         ),

@@ -30,7 +30,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                 //BRANDING//
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.07,
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +44,6 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                           children: [
                             const Hero(
                               tag: 'logo',
-                              transitionOnUserGestures: true,
                               child: BSLogoMobile(fontsize: 40),
                             ),
                             Text(
@@ -64,6 +63,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                   .textTheme
                                   .displayLarge
                                   ?.copyWith(
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 40,
                                   ),
                             ),
@@ -96,75 +96,44 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                           return;
                         }
                       },
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      width: MediaQuery.of(context).size.width * 0.8),
+                      height: MediaQuery.of(context).size.height * 0.045,
+                      width: MediaQuery.of(context).size.width * 0.9),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Column(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text.rich(
+                      Text.rich(
+                        TextSpan(
+                          text: 'Mais de ',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                  ),
+                          children: [
                             TextSpan(
-                              text: 'Mais de ',
+                              text: 'XXX ',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
                                   ?.copyWith(
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w800,
                                     fontSize: 14,
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSurfaceVariant,
                                   ),
-                              children: [
-                                TextSpan(
-                                  text: 'XXX ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                      ),
-                                ),
-                                TextSpan(
-                                  text: 'sites indexados',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text.rich(
                             TextSpan(
-                              text: 'e mais de ',
+                              text: 'sites indexados, e mais de ',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -172,39 +141,38 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSurfaceVariant,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                              children: [
-                                TextSpan(
-                                  text: 'XXX ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                      ),
-                                ),
-                                TextSpan(
-                                  text: 'termos no dicionário.',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                              ],
                             ),
-                          ),
-                        ],
+                            TextSpan(
+                              text: 'XXX ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                  ),
+                            ),
+                            TextSpan(
+                              text: 'termos no dicionário.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

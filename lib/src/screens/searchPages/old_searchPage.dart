@@ -162,258 +162,277 @@ class _SearchPageState extends State<SearchPage> {
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20, left: 62, right: 62),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                                tooltip:
-                                    'Ir para a página inicial do Bug Search',
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/');
-                                },
-                                style: Theme.of(context)
-                                    .textButtonTheme
-                                    .style
-                                    ?.copyWith(
-                                      overlayColor: MaterialStateProperty.all(
-                                          Colors.transparent),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.transparent),
-                                    ),
-                                icon: const Hero(tag: 'logo', child: BSLogo())),
-                            Hero(
-                              tag: 'searchBar',
-                              child: CustomSearchBar(
-                                  searchController: _searchController,
-                                  onSubmitted: (value) {
-                                    if (value.isNotEmpty) {
-                                      Navigator.pushNamed(context, '/search',
-                                          arguments: value);
-                                      _searchController.clear;
-                                    } else {
-                                      return;
-                                    }
-                                  },
-                                  onPress: () {
-                                    if (_searchController.text.isNotEmpty) {
-                                      Navigator.pushNamed(context, '/search',
-                                          arguments: _searchController.text);
-                                      _searchController.clear;
-                                    } else {
-                                      return;
-                                    }
-                                  },
-                                  height: 48,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4),
-                            ),
-                            Slider(
-                              inactiveColor:
-                                  Theme.of(context).colorScheme.surface,
-                              activeColor:
-                                  Theme.of(context).colorScheme.primary,
-                              value: searchDensityValue,
-                              min: 20,
-                              max: 100,
-                              divisions: 4,
-                              label: "Densidade da busca: $searchDensityValue%",
-                              onChanged: (newsearchDensityValue) {
-                                setState(() {
-                                  searchDensityValue = newsearchDensityValue;
-                                  searchDensityChanged = true;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        Flexible(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Row(
                             children: [
-                              Hero(
-                                tag: 'button',
-                                child: IconButton(
-                                  tooltip: 'Favoritos',
-                                  hoverColor:
-                                      Theme.of(context).colorScheme.secondary,
-                                  highlightColor:
-                                      Theme.of(context).colorScheme.tertiary,
-                                  isSelected: onClick,
-                                  selectedIcon:
-                                      const Icon(BootstrapIcons.bookmark_fill),
+                              IconButton(
+                                  tooltip:
+                                      'Ir para a página inicial do Bug Search',
                                   onPressed: () {
-                                    setState(() {
-                                      onClick = !onClick;
-                                    });
+                                    Navigator.pushNamed(context, '/');
                                   },
-                                  icon: const Icon(BootstrapIcons.bookmark),
-                                ),
-                              ),
-                              const SizedBox(width: 40),
+                                  style: Theme.of(context)
+                                      .textButtonTheme
+                                      .style
+                                      ?.copyWith(
+                                        overlayColor: MaterialStateProperty.all(
+                                            Colors.transparent),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.transparent),
+                                      ),
+                                  icon:
+                                      const Hero(tag: 'logo', child: BSLogo())),
                               Hero(
-                                tag: 'switch',
-                                child: customSwitchButton(
-                                    (p0) => {
-                                          setState(() {
-                                            isSwitched = p0;
-                                          })
-                                        },
-                                    isSwitched,
-                                    48,
-                                    88),
+                                tag: 'searchBar',
+                                child: CustomSearchBar(
+                                    searchController: _searchController,
+                                    onSubmitted: (value) {
+                                      if (value.isNotEmpty) {
+                                        Navigator.pushNamed(context, '/search',
+                                            arguments: value);
+                                        _searchController.clear;
+                                      } else {
+                                        return;
+                                      }
+                                    },
+                                    onPress: () {
+                                      if (_searchController.text.isNotEmpty) {
+                                        Navigator.pushNamed(context, '/search',
+                                            arguments: _searchController.text);
+                                        _searchController.clear;
+                                      } else {
+                                        return;
+                                      }
+                                    },
+                                    height: 48,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.4),
+                              ),
+                              Slider(
+                                inactiveColor:
+                                    Theme.of(context).colorScheme.surface,
+                                activeColor:
+                                    Theme.of(context).colorScheme.primary,
+                                value: searchDensityValue,
+                                min: 20,
+                                max: 100,
+                                divisions: 4,
+                                label:
+                                    "Densidade da busca: $searchDensityValue%",
+                                onChanged: (newsearchDensityValue) {
+                                  setState(() {
+                                    searchDensityValue = newsearchDensityValue;
+                                    searchDensityChanged = true;
+                                  });
+                                },
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                          Flexible(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                const Expanded(child: SizedBox()),
+                                Hero(
+                                  tag: 'button',
+                                  child: IconButton(
+                                    tooltip: 'Favoritos',
+                                    hoverColor:
+                                        Theme.of(context).colorScheme.secondary,
+                                    highlightColor:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    isSelected: onClick,
+                                    selectedIcon: const Icon(
+                                        BootstrapIcons.bookmark_fill),
+                                    onPressed: () {
+                                      setState(() {
+                                        onClick = !onClick;
+                                      });
+                                    },
+                                    icon: const Icon(BootstrapIcons.bookmark),
+                                  ),
+                                ),
+                                const SizedBox(width: 40),
+                                Hero(
+                                  tag: 'switch',
+                                  child: customSwitchButton(
+                                      (p0) => {
+                                            setState(() {
+                                              isSwitched = p0;
+                                            })
+                                          },
+                                      isSwitched,
+                                      48,
+                                      88),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 190),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: _toggleTap,
-                          child: Text(
-                            'Todos',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium
-                                ?.copyWith(
-                                  fontWeight: _isTapped
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
-                                  color: _isTapped
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
-                                ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 190),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: _toggleTap,
+                            child: Text(
+                              'Todos',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(
+                                    fontWeight: _isTapped
+                                        ? FontWeight.w600
+                                        : FontWeight.w400,
+                                    color: _isTapped
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                  ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        GestureDetector(
-                          onTap: _toggleTap1,
-                          child: Text(
-                            'Imagens',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium
-                                ?.copyWith(
-                                  fontWeight: _isTapped1
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
-                                  color: _isTapped1
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
-                                ),
+                          const SizedBox(width: 16),
+                          GestureDetector(
+                            onTap: _toggleTap1,
+                            child: Text(
+                              'Imagens',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(
+                                    fontWeight: _isTapped1
+                                        ? FontWeight.w600
+                                        : FontWeight.w400,
+                                    color: _isTapped1
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                  ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        GestureDetector(
-                          onTap: _toggleTap2,
-                          child: Text(
-                            'Vídeos',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium
-                                ?.copyWith(
-                                  fontWeight: _isTapped2
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
-                                  color: _isTapped2
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
-                                ),
+                          const SizedBox(width: 16),
+                          GestureDetector(
+                            onTap: _toggleTap2,
+                            child: Text(
+                              'Vídeos',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(
+                                    fontWeight: _isTapped2
+                                        ? FontWeight.w600
+                                        : FontWeight.w400,
+                                    color: _isTapped2
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                  ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        GestureDetector(
-                          onTap: _toggleTap3,
-                          child: Text(
-                            'Documentos',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium
-                                ?.copyWith(
-                                  fontWeight: _isTapped3
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
-                                  color: _isTapped3
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
-                                ),
+                          const SizedBox(width: 16),
+                          GestureDetector(
+                            onTap: _toggleTap3,
+                            child: Text(
+                              'Documentos',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(
+                                    fontWeight: _isTapped3
+                                        ? FontWeight.w600
+                                        : FontWeight.w400,
+                                    color: _isTapped3
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                  ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-
-                  Divider(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    thickness: 1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 190),
-                    child: Row(
-                      children: [
-                        searchKey.isEmpty
-                            ? Text(
-                                'Insira um termo para pesquisar',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              )
-                            : searchKey.isNotEmpty
-                                ? Text.rich(
-                                    TextSpan(
-                                      text: '${resultsLength.toString()} ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w900,
-                                            // fontSize: 14,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurfaceVariant,
+                    Divider(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      thickness: 1,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 190),
+                      child: Row(
+                        children: [
+                          searchKey.isEmpty
+                              ? Text(
+                                  'Insira um termo para pesquisar',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                )
+                              : searchKey.isNotEmpty
+                                  ? Text.rich(
+                                      TextSpan(
+                                        text: '${resultsLength.toString()} ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w900,
+                                              // fontSize: 14,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurfaceVariant,
+                                            ),
+                                        children: [
+                                          TextSpan(
+                                            text:
+                                                'resultados encontrados para: ${searchKey.toString()}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
-                                      children: [
-                                        TextSpan(
-                                          text:
-                                              'resultados encontrados para: ${searchKey.toString()}',
+                                        ],
+                                      ),
+                                    )
+                                  : resultsFromJson.isEmpty
+                                      ? Text(
+                                          'Nenhum resultado encontrado para: ${searchKey.toString()}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleSmall
@@ -423,138 +442,93 @@ class _SearchPageState extends State<SearchPage> {
                                                     .onSurfaceVariant,
                                                 fontWeight: FontWeight.w600,
                                               ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : resultsLength == 0
-                                    ? Text(
-                                        'Nenhum resultado encontrado para: ${searchKey.toString()}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall
-                                            ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurfaceVariant,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      )
-                                    : const SizedBox(),
-                      ],
+                                        )
+                                      : const SizedBox(width: 1),
+                        ],
+                      ),
                     ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // ListView //
-                  FutureBuilder(
-                    future: fetchDataFromAPI(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        //final resultsFromJson = snapshot.data;
-                        return resultsFromJson.isNotEmpty
-                            ? SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.72,
-                                width: MediaQuery.of(context).size.width * 0.75,
-                                child: ListView.builder(
-                                  itemCount: resultsFromJson.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Center(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          TextButton(
-                                            onHover: (value) {
-                                              setState(() {
-                                                isHovered = value;
-                                              });
-                                            },
-                                            style: Theme.of(context)
-                                                .textButtonTheme
-                                                .style
-                                                ?.copyWith(
-                                                  padding: MaterialStateProperty
-                                                      .all<EdgeInsets>(
-                                                          EdgeInsets.zero),
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                          Color>(
-                                                    Theme.of(context)
-                                                        .colorScheme
-                                                        .surface,
-                                                  ),
-                                                  overlayColor:
-                                                      MaterialStateProperty.all<
-                                                          Color>(
-                                                    Theme.of(context)
-                                                        .colorScheme
-                                                        .surface,
-                                                  ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                // ListView //
+                FutureBuilder(
+                  future: fetchDataFromAPI(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return resultsFromJson.isNotEmpty
+                          ? SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.78,
+                              width: MediaQuery.of(context).size.width * 0.75,
+                              child: ListView.builder(
+                                itemCount: resultsFromJson.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Center(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        TextButton(
+                                          onHover: (value) {
+                                            setState(() {
+                                              isHovered = value;
+                                            });
+                                          },
+                                          style: Theme.of(context)
+                                              .textButtonTheme
+                                              .style
+                                              ?.copyWith(
+                                                padding: MaterialStateProperty
+                                                    .all<EdgeInsets>(
+                                                        EdgeInsets.zero),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .surface,
                                                 ),
-                                            onPressed: () async {
-                                              await openUrl(
-                                                  resultsFromJson[index]
-                                                      ['link']);
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    CircleAvatar(
-                                                      backgroundColor:
-                                                          Theme.of(context)
-                                                              .colorScheme
-                                                              .primary,
-                                                      radius: 14,
-                                                      child: Text(
-                                                          resultsFromJson[index]
-                                                                      ['title']
-                                                                  .toString()
-                                                                  .isNotEmpty
-                                                              ? '${resultsFromJson[index]['title'].toString().substring(0, 1).toUpperCase()}, ${resultsFromJson[index]['title'].toString().substring(1, 2).toUpperCase()}'
-                                                              : 'N/A',
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleMedium
-                                                                  ?.copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Theme.of(
-                                                                            context)
-                                                                        .colorScheme
-                                                                        .onSurface,
-                                                                  )),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    SizedBox(
-                                                      child: Text(
+                                                overlayColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .surface,
+                                                ),
+                                              ),
+                                          onPressed: () async {
+                                            await openUrl(
+                                                resultsFromJson[index]['link']);
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundColor:
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                    radius: 14,
+                                                    child: Text(
                                                         resultsFromJson[index]
-                                                                ['link']
-                                                            .toString(),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                                    ['title']
+                                                                .toString()
+                                                                .isNotEmpty
+                                                            ? '${resultsFromJson[index]['title'].toString().substring(0, 1).toUpperCase()}, ${resultsFromJson[index]['title'].toString().substring(1, 2).toUpperCase()}'
+                                                            : 'N/A',
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .titleMedium
@@ -562,79 +536,100 @@ class _SearchPageState extends State<SearchPage> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              fontSize: 14,
+                                                              fontSize: 12,
                                                               color: Theme.of(
                                                                       context)
                                                                   .colorScheme
-                                                                  .onSurfaceVariant,
-                                                            ),
-                                                      ),
+                                                                  .onSurface,
+                                                            )),
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  SizedBox(
+                                                    child: Text(
+                                                      resultsFromJson[index]
+                                                              ['link']
+                                                          .toString(),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleMedium
+                                                          ?.copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 14,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSurfaceVariant,
+                                                          ),
                                                     ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 8),
-                                                SizedBox(
-                                                  child: Text(
-                                                    resultsFromJson[index]
-                                                                    ['title']
-                                                                .toString() !=
-                                                            'null'
-                                                        ? resultsFromJson[index]
-                                                                ['title']
-                                                            .toString()
-                                                        : 'N/A',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .displayMedium
-                                                        ?.copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 16,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary,
-                                                        ),
                                                   ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 8),
+                                              SizedBox(
+                                                child: Text(
+                                                  resultsFromJson[index]
+                                                                  ['title']
+                                                              .toString() !=
+                                                          'null'
+                                                      ? resultsFromJson[index]
+                                                              ['title']
+                                                          .toString()
+                                                      : 'N/A',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .displayMedium
+                                                      ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 16,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                      ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(height: 8),
-                                          SizedBox(
-                                            child: Text(
-                                              resultsFromJson[index]
-                                                              ['description']
-                                                          .toString() !=
-                                                      'null'
-                                                  ? resultsFromJson[index]
-                                                          ['description']
-                                                      .toString()
-                                                  : 'N/A',
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 3,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displaySmall
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onSurfaceVariant,
-                                                  ),
-                                            ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        SizedBox(
+                                          child: Text(
+                                            resultsFromJson[index]
+                                                            ['description']
+                                                        .toString() !=
+                                                    'null'
+                                                ? resultsFromJson[index]
+                                                        ['description']
+                                                    .toString()
+                                                : 'N/A',
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 3,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                                ),
                                           ),
-                                          const SizedBox(height: 40),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : Center(
+                                        ),
+                                        const SizedBox(height: 40),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : Expanded(
+                              child: Center(
                                 child: Text(
                                   'Nenhum resultado encontrado',
                                   style: Theme.of(context)
@@ -647,18 +642,18 @@ class _SearchPageState extends State<SearchPage> {
                                             .onSurfaceVariant,
                                       ),
                                 ),
-                              );
-                      } else {
-                        return const Expanded(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
+                              ),
+                            );
+                    } else {
+                      return const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
           ),
         ),
