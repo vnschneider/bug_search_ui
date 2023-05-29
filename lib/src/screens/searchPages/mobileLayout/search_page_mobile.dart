@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:bug_search/src/models/custom_searchbar_mobile.dart';
 import 'package:flutter/material.dart';
-import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 import '../../../functions/get_results.dart';
 import '../../../functions/url_launcher.dart';
 
@@ -20,20 +19,16 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
   int resultsLength = 0;
   final _searchController = TextEditingController();
   List<dynamic> resultsFromJson = [];
-  late ScrollController _scrollController;
 
   @override
   void initState() {
-    fetchDataFromAPI();
-    // initialize scroll controllers
-    _scrollController = ScrollController();
+    //fetchDataFromAPI();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
-    _searchController.dispose();
     super.dispose();
   }
 
@@ -61,9 +56,8 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
       print('Algo deu errado! $e');
     }
     if (searchDensityChanged == true) {
-      setState(() {
-        fetchDataFromAPI();
-      });
+      fetchDataFromAPI();
+
       searchDensityChanged = false;
     }
   }
@@ -83,7 +77,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
         surfaceTintColor: Theme.of(context).colorScheme.onSurface,
         shadowColor: Theme.of(context).colorScheme.primary,
         automaticallyImplyLeading: false,
-        toolbarHeight: 140,
+        toolbarHeight: 180,
         flexibleSpace: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
@@ -155,44 +149,14 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                   });
                 },
               ),
-            ],
-          ),
-        ),
-      ),
-      body: WebSmoothScroll(
-        controller: _scrollController,
-        scrollOffset: 100, // additional offset to users scroll input
-        animationDuration:
-            500, // duration of animation of scroll in milliseconds
-        curve: Curves.easeInOutCirc, // curve of the animation
-        child: SingleChildScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          controller: _scrollController,
-          child: SizedBox(
-            height: resultsFromJson.length >= 5
-                ? MediaQuery.of(context).size.height * 2
-                : resultsFromJson.length >= 10
-                    ? MediaQuery.of(context).size.height * 4
-                    : resultsFromJson.length >= 15
-                        ? MediaQuery.of(context).size.height * 15
-                        : resultsFromJson.length >= 20
-                            ? MediaQuery.of(context).size.height * 30
-                            : MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Divider(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.05),
-                  child: Text(
+              Divider(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
                     searchKey.isEmpty
                         ? 'Insira um termo para buscar'
                         : resultsLength == 0
@@ -205,220 +169,206 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                   ),
-                ),
-
-                const SizedBox(height: 10),
-                //const SizedBox(height: 16),
-                FutureBuilder(
-                  future: fetchDataFromAPI(),
-                  builder: (context, snapshot) {
-                    if (resultsFromJson.isNotEmpty) {
-                      //final resultsFromJson = snapshot.data;
-                      return resultsFromJson.isNotEmpty
-                          ? Flexible(
-                              child: ListView.builder(
-                                // scrollDirection: Axis.vertical,
-                                itemCount: resultsFromJson.length,
-                                //  shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 12),
-                                    child: TextButton(
-                                      style: Theme.of(context)
-                                          .textButtonTheme
-                                          .style
-                                          ?.copyWith(
-                                            padding: MaterialStateProperty.all<
-                                                EdgeInsets>(EdgeInsets.zero),
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .surface,
-                                            ),
-                                            overlayColor: MaterialStateProperty
-                                                .all<Color>(
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .surface,
-                                            ),
-                                          ),
-                                      onPressed: () async {
-                                        await openUrl(
-                                            resultsFromJson[index]['link']);
-                                      },
-                                      child: Column(
+                ],
+              ),
+              // const SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          //const SizedBox(height: 16),
+          FutureBuilder(
+            future: fetchDataFromAPI(),
+            builder: (context, snapshot) {
+              if (resultsFromJson.isNotEmpty) {
+                //final resultsFromJson = snapshot.data;
+                return resultsFromJson.isNotEmpty
+                    ? Flexible(
+                        child: ListView.builder(
+                          // scrollDirection: Axis.vertical,
+                          itemCount: resultsFromJson.length,
+                          //  shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
+                              child: TextButton(
+                                style: Theme.of(context)
+                                    .textButtonTheme
+                                    .style
+                                    ?.copyWith(
+                                      padding:
+                                          MaterialStateProperty.all<EdgeInsets>(
+                                              EdgeInsets.zero),
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        Theme.of(context).colorScheme.surface,
+                                      ),
+                                      overlayColor:
+                                          MaterialStateProperty.all<Color>(
+                                        Theme.of(context).colorScheme.surface,
+                                      ),
+                                    ),
+                                onPressed: () async {
+                                  await openUrl(resultsFromJson[index]['link']);
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    SizedBox(
+                                      child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         mainAxisSize: MainAxisSize.max,
+                                        textDirection: TextDirection.ltr,
                                         children: [
                                           SizedBox(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisSize: MainAxisSize.max,
-                                              textDirection: TextDirection.ltr,
-                                              children: [
-                                                SizedBox(
-                                                  height: 24,
-                                                  width: 24,
-                                                  child: Image.asset(
-                                                      'assets/bs_logo.png',
-                                                      fit: BoxFit.cover,
-                                                      semanticLabel:
-                                                          'Bug Search Logo'),
-                                                ),
-                                                const SizedBox(width: 4),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.8,
-                                                      child: Text(
-                                                        resultsFromJson[index]
-                                                                        ['link']
-                                                                    .toString() !=
-                                                                'null'
-                                                            ? resultsFromJson[
-                                                                        index]
-                                                                    ['link']
-                                                                .toString()
-                                                            : 'N/A',
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .displayMedium
-                                                            ?.copyWith(
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onSurfaceVariant,
-                                                            ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.8,
-                                                      child: Text(
-                                                        resultsFromJson[index][
-                                                                        'title']
-                                                                    .toString() !=
-                                                                'null'
-                                                            ? resultsFromJson[
-                                                                        index]
-                                                                    ['title']
-                                                                .toString()
-                                                            : 'N/A',
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .displaySmall
-                                                            ?.copyWith(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .primary,
-                                                            ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                            height: 24,
+                                            width: 24,
+                                            child: Image.asset(
+                                                'assets/bs_logo.png',
+                                                fit: BoxFit.cover,
+                                                semanticLabel:
+                                                    'Bug Search Logo'),
                                           ),
-                                          const SizedBox(height: 8),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.8,
-                                            child: Text(
-                                              resultsFromJson[index]
-                                                              ['description']
-                                                          .toString() !=
-                                                      'null'
-                                                  ? resultsFromJson[index]
-                                                          ['description']
-                                                      .toString()
-                                                  : 'N/A',
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 3,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displaySmall
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 12,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onSurfaceVariant,
-                                                  ),
-                                            ),
+                                          const SizedBox(width: 4),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.8,
+                                                child: Text(
+                                                  resultsFromJson[index]['link']
+                                                              .toString() !=
+                                                          'null'
+                                                      ? resultsFromJson[index]
+                                                              ['link']
+                                                          .toString()
+                                                      : 'N/A',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .displayMedium
+                                                      ?.copyWith(
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSurfaceVariant,
+                                                      ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.8,
+                                                child: Text(
+                                                  resultsFromJson[index]
+                                                                  ['title']
+                                                              .toString() !=
+                                                          'null'
+                                                      ? resultsFromJson[index]
+                                                              ['title']
+                                                          .toString()
+                                                      : 'N/A',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .displaySmall
+                                                      ?.copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(height: 12),
                                         ],
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
-                            )
-                          : Center(
-                              child: Text(
-                                'Nenhum resultado encontrado',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
+                                    const SizedBox(height: 8),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                      child: Text(
+                                        resultsFromJson[index]['description']
+                                                    .toString() !=
+                                                'null'
+                                            ? resultsFromJson[index]
+                                                    ['description']
+                                                .toString()
+                                            : 'N/A',
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displaySmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurfaceVariant,
+                                            ),
+                                      ),
                                     ),
+                                    const SizedBox(height: 12),
+                                  ],
+                                ),
                               ),
                             );
-                    } else {
-                      return const Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(),
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                          'Nenhum resultado encontrado',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
+                              ),
                         ),
                       );
-                    }
-                  },
-                ),
-              ],
-            ),
+              } else {
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+            },
           ),
-        ),
+        ],
       ),
     );
   }

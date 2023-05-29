@@ -36,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
-    fetchDataFromAPI();
+    //fetchDataFromAPI();
     // initialize scroll controllers
     _scrollController = ScrollController();
     super.initState();
@@ -72,9 +72,8 @@ class _SearchPageState extends State<SearchPage> {
       print('Algo deu errado! $e');
     }
     if (searchDensityChanged == true) {
-      setState(() {
-        fetchDataFromAPI();
-      });
+      fetchDataFromAPI();
+
       searchDensityChanged = false;
     }
   }
@@ -456,13 +455,15 @@ class _SearchPageState extends State<SearchPage> {
                   builder: (context, snapshot) {
                     if (resultsFromJson.isNotEmpty) {
                       return resultsFromJson.isNotEmpty
-                          ? SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.78,
-                              width: MediaQuery.of(context).size.width * 0.75,
+                          ? Flexible(
                               child: ListView.builder(
                                 itemCount: resultsFromJson.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Center(
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            MediaQuery.of(context).size.width *
+                                                0.15),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
