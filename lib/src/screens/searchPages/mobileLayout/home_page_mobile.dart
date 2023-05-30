@@ -18,11 +18,11 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
 
   @override
   void initState() {
-    fetchDataFromSummary2();
+    fetchDataFromSummary();
     super.initState();
   }
 
-  Future fetchDataFromSummary2() async {
+  Future fetchDataFromSummary() async {
     List indexedValues = await fetchDataSumary(
         'http://apiv2-bugsearch.eastus.cloudapp.azure.com/summary');
 
@@ -37,7 +37,7 @@ class _BugSearchUIMobileState extends State<BugSearchUIMobile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: fetchDataFromSummary2(),
+        future: fetchDataFromSummary(),
         builder: (context, snapshot) {
           if (indexedPages != 0 && indexedTerms != 0) {
             return SingleChildScrollView(

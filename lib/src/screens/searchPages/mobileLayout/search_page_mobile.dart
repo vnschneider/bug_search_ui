@@ -17,6 +17,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
   double sliderValue = 20;
 
   bool getResults = false;
+  bool onSearch = true;
   int resultsLength = 0;
   final _searchController = TextEditingController();
   List<dynamic> resultsFromJson = [];
@@ -41,19 +42,24 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
   }
 
   Future fetchDataFromAPI() async {
-    try {
-      List data = await fetchData2(
-          'http://apiv2-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}');
-      resultsFromJson = data;
-      setState(() {
-        resultsLength = resultsFromJson.length;
-      });
-      //print('PRINTING DATA FROM FETCHDATAFROMAPI');
-      // print(resultsFromJson);
-      // searchLength = data.length;
-      return resultsFromJson;
-    } catch (e) {
-      print('Algo deu errado! $e');
+    if (onSearch) {
+      try {
+        List data = await fetchData2(
+                'http://apiv2-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}')
+            .whenComplete(() => onSearch = false);
+        resultsFromJson = data;
+        setState(() {
+          resultsLength = resultsFromJson.length;
+        });
+        //print('PRINTING DATA FROM FETCHDATAFROMAPI');
+        // print(resultsFromJson);
+        // searchLength = data.length;
+        return resultsFromJson;
+      } catch (e) {
+        print('Algo deu errado! $e');
+      }
+    } else {
+      onSearch = true;
     }
   }
 
@@ -138,6 +144,9 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                 divisions: 4,
                 label: "Densidade da busca: $sliderValue%",
                 onChanged: (newsearchDensityValue) {
+                  setState(() {
+                    onSearch = true;
+                  });
                   if (newsearchDensityValue == 20) {
                     searchDensityValue = 100;
                     sliderValue = 20;
