@@ -184,24 +184,28 @@ class _SearchPageState extends State<SearchPage> {
                         children: [
                           Row(
                             children: [
-                              IconButton(
-                                  tooltip:
-                                      'Ir para a página inicial do Bug Search',
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/');
-                                  },
-                                  style: Theme.of(context)
-                                      .textButtonTheme
-                                      .style
-                                      ?.copyWith(
-                                        overlayColor: MaterialStateProperty.all(
-                                            Colors.transparent),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.transparent),
-                                      ),
-                                  icon:
-                                      const Hero(tag: 'logo', child: BSLogo())),
+                              Hero(
+                                tag: 'logo',
+                                child: IconButton(
+                                    tooltip:
+                                        'Ir para a página inicial do Bug Search',
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, '/');
+                                    },
+                                    style: Theme.of(context)
+                                        .textButtonTheme
+                                        .style
+                                        ?.copyWith(
+                                          overlayColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.transparent),
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.transparent),
+                                        ),
+                                    icon: const Hero(
+                                        tag: 'logo', child: BSLogo())),
+                              ),
                               Hero(
                                 tag: 'searchBar',
                                 child: CustomSearchBar(
