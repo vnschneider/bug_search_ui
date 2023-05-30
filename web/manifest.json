@@ -31,14 +31,6 @@
             "type": "image/png",
             "purpose": "maskable"
         }
-    ],
-    
-
-    "fonts": [
-        {
-            "asset":"fonts/iconsax.ttf",
-            "family":"Iconsax"
-        }
     ]
         
 }

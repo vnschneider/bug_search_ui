@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:bug_search/src/functions/get_sumary.dart';
 import 'package:bug_search/src/models/bsLogo.dart';
 import 'package:bug_search/src/models/customButton.dart';
 import 'package:bug_search/src/models/searchBar.dart';
@@ -16,12 +19,35 @@ class _BugSearchUIWebState extends State<BugSearchUIWeb> {
   bool isSwitched = false;
   bool buttonHover = false;
   final _searchController = TextEditingController();
+  List<dynamic> resultsFromJson = [];
+
+  @override
+  initState() {
+    super.initState();
+    fetchDataFromSumary();
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
 
     super.dispose();
+  }
+
+  Future fetchDataFromSumary() async {
+    try {
+      List data = await fetchDataSumary(
+          'http://api-bugsearch.eastus.cloudapp.azure.com/sumary');
+
+      setState(() {
+        resultsFromJson = data;
+      });
+      print('PRINTING DATA FROM FETCHDATAFROMAPI');
+      print(resultsFromJson);
+      return data;
+    } catch (e) {
+      print('Algo deu errado! $e');
+    }
   }
 
   @override
@@ -128,7 +154,7 @@ class _BugSearchUIWebState extends State<BugSearchUIWeb> {
                           ),
                       children: [
                         TextSpan(
-                          text: 'XXX ',
+                          text: resultsFromJson[0]['indexedPages'].toString(),
                           style:
                               Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.w800,
@@ -148,7 +174,7 @@ class _BugSearchUIWebState extends State<BugSearchUIWeb> {
                                   ),
                         ),
                         TextSpan(
-                          text: 'XXX ',
+                          text: resultsFromJson[0]['indexedTerms'].toString(),
                           style:
                               Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.w800,
