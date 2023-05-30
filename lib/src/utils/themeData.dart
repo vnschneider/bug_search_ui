@@ -27,11 +27,10 @@ final ThemeData themeData = ThemeData(
       //fontStyle: FontStyle.italic,
     ),
     headlineMedium: GoogleFonts.poppins(
-      
       textStyle: const TextStyle(color: Color(0xffFAFAFB)),
       fontSize: 18,
       fontWeight: FontWeight.w400,
-      
+
       //fontStyle: FontStyle.italic,
     ),
     titleLarge: GoogleFonts.poppins(
@@ -87,9 +86,13 @@ final ThemeData themeData = ThemeData(
     selectionHandleColor: Color(0xffFAFAFB),
     cursorColor: Color(0xffFAFAFB),
   ),
+  scrollbarTheme: const ScrollbarThemeData(
+    thumbColor: MaterialStatePropertyAll(Color(0xff4766EA)),
+  ),
 
   useMaterial3: true,
   //light scheme
+
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xff4766EA),

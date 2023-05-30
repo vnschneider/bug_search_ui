@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:bug_search/src/models/custom_searchbar_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../functions/get_results.dart';
 import '../../../functions/url_launcher.dart';
 
@@ -19,6 +20,7 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
   bool getResults = false;
   bool onSearch = true;
   int resultsLength = 0;
+  final ScrollController _scrollController = ScrollController();
   final _searchController = TextEditingController();
   List<dynamic> resultsFromJson = [];
 
@@ -205,159 +207,165 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
                 //final resultsFromJson = snapshot.data;
                 return resultsFromJson.isNotEmpty
                     ? Flexible(
-                        child: ListView.builder(
-                          // scrollDirection: Axis.vertical,
-                          itemCount: resultsFromJson.length,
-                          //  shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
-                              child: TextButton(
-                                style: Theme.of(context)
-                                    .textButtonTheme
-                                    .style
-                                    ?.copyWith(
-                                      padding:
-                                          MaterialStateProperty.all<EdgeInsets>(
-                                              EdgeInsets.zero),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                        Theme.of(context).colorScheme.surface,
+                        child: Scrollbar(
+                          controller: _scrollController,
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            // scrollDirection: Axis.vertical,
+                            itemCount: resultsFromJson.length,
+                            //  shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 12),
+                                child: TextButton(
+                                  style: Theme.of(context)
+                                      .textButtonTheme
+                                      .style
+                                      ?.copyWith(
+                                        padding: MaterialStateProperty.all<
+                                            EdgeInsets>(EdgeInsets.zero),
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                          Theme.of(context).colorScheme.surface,
+                                        ),
+                                        overlayColor:
+                                            MaterialStateProperty.all<Color>(
+                                          Theme.of(context).colorScheme.surface,
+                                        ),
                                       ),
-                                      overlayColor:
-                                          MaterialStateProperty.all<Color>(
-                                        Theme.of(context).colorScheme.surface,
-                                      ),
-                                    ),
-                                onPressed: () async {
-                                  await openUrl(resultsFromJson[index]['link']);
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    SizedBox(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        textDirection: TextDirection.ltr,
-                                        children: [
-                                          SizedBox(
-                                            height: 24,
-                                            width: 24,
-                                            child: Image.asset(
-                                                'assets/bs_logo.png',
-                                                fit: BoxFit.cover,
-                                                semanticLabel:
+                                  onPressed: () async {
+                                    await openUrl(
+                                        resultsFromJson[index]['link']);
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      SizedBox(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.max,
+                                          textDirection: TextDirection.ltr,
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/bs_logo.svg',
+                                                height: 24,
+                                                width: 24,
+                                                semanticsLabel:
                                                     'Bug Search Logo'),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.8,
-                                                child: Text(
-                                                  resultsFromJson[index]['link']
-                                                              .toString() !=
-                                                          'null'
-                                                      ? resultsFromJson[index]
-                                                              ['link']
-                                                          .toString()
-                                                      : 'N/A',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .displayMedium
-                                                      ?.copyWith(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .onSurfaceVariant,
-                                                      ),
+                                            const SizedBox(width: 4),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.8,
+                                                  child: Text(
+                                                    resultsFromJson[index]
+                                                                    ['link']
+                                                                .toString() !=
+                                                            'null'
+                                                        ? resultsFromJson[index]
+                                                                ['link']
+                                                            .toString()
+                                                        : 'Sem link',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .displayMedium
+                                                        ?.copyWith(
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .colorScheme
+                                                              .onSurfaceVariant,
+                                                        ),
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.8,
-                                                child: Text(
-                                                  resultsFromJson[index]
-                                                                  ['title']
-                                                              .toString() !=
-                                                          'null'
-                                                      ? resultsFromJson[index]
-                                                              ['title']
-                                                          .toString()
-                                                      : 'N/A',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .displaySmall
-                                                      ?.copyWith(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                      ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.8,
+                                                  child: Text(
+                                                    resultsFromJson[index]
+                                                                    ['title']
+                                                                .toString() !=
+                                                            'null'
+                                                        ? resultsFromJson[index]
+                                                                ['title']
+                                                            .toString()
+                                                        : 'Sem título',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .displaySmall
+                                                        ?.copyWith(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary,
+                                                        ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.8,
-                                      child: Text(
-                                        resultsFromJson[index]['description']
-                                                    .toString() !=
-                                                'null'
-                                            ? resultsFromJson[index]
-                                                    ['description']
-                                                .toString()
-                                            : 'N/A',
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displaySmall
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurfaceVariant,
+                                              ],
                                             ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                  ],
+                                      const SizedBox(height: 8),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        child: Text(
+                                          resultsFromJson[index]['description']
+                                                      .toString() !=
+                                                  'null'
+                                              ? resultsFromJson[index]
+                                                      ['description']
+                                                  .toString()
+                                              : 'Sem descrição',
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displaySmall
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurfaceVariant,
+                                              ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 12),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       )
                     : Center(
