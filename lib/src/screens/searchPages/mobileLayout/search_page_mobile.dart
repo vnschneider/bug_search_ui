@@ -13,8 +13,9 @@ class SearchPageMobile extends StatefulWidget {
 
 class _SearchPageMobileState extends State<SearchPageMobile> {
   String searchKey = '';
-  double searchDensityValue = 20;
-  bool searchDensityChanged = false;
+  double searchDensityValue = 100;
+  double sliderValue = 20;
+
   bool getResults = false;
   int resultsLength = 0;
   final _searchController = TextEditingController();
@@ -42,23 +43,17 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
   Future fetchDataFromAPI() async {
     try {
       List data = await fetchData2(
-          'http://api-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}');
-
+          'http://apiv2-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}');
+      resultsFromJson = data;
       setState(() {
-        resultsFromJson = data;
         resultsLength = resultsFromJson.length;
       });
       //print('PRINTING DATA FROM FETCHDATAFROMAPI');
       // print(resultsFromJson);
       // searchLength = data.length;
-      return data;
+      return resultsFromJson;
     } catch (e) {
       print('Algo deu errado! $e');
-    }
-    if (searchDensityChanged == true) {
-      fetchDataFromAPI();
-
-      searchDensityChanged = false;
     }
   }
 
@@ -137,16 +132,28 @@ class _SearchPageMobileState extends State<SearchPageMobile> {
               Slider(
                 inactiveColor: Theme.of(context).colorScheme.surface,
                 activeColor: Theme.of(context).colorScheme.primary,
-                value: searchDensityValue,
+                value: sliderValue,
                 min: 20,
                 max: 100,
                 divisions: 4,
-                label: "Densidade da busca: $searchDensityValue%",
+                label: "Densidade da busca: $sliderValue%",
                 onChanged: (newsearchDensityValue) {
-                  setState(() {
-                    searchDensityValue = newsearchDensityValue;
-                    searchDensityChanged = true;
-                  });
+                  if (newsearchDensityValue == 20) {
+                    searchDensityValue = 100;
+                    sliderValue = 20;
+                  } else if (newsearchDensityValue == 40) {
+                    searchDensityValue = 250;
+                    sliderValue = 40;
+                  } else if (newsearchDensityValue == 60) {
+                    searchDensityValue = 500;
+                    sliderValue = 60;
+                  } else if (newsearchDensityValue == 80) {
+                    searchDensityValue = 750;
+                    sliderValue = 80;
+                  } else {
+                    searchDensityValue = 1000;
+                    sliderValue = 100;
+                  }
                 },
               ),
               Divider(

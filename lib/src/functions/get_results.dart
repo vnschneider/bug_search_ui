@@ -17,8 +17,8 @@ Future<List<dynamic>> fetchData2(String url) async {
     //print(data);
     for (var item in data["searchResults"]) {
       result.add({
-        'index': item['index'],
-        'guid': item['guid'],
+//'index': item['index'],
+       'pts': item['pts'],
         'link': item['link'],
         'title': item['title'],
         'description': item['description'],

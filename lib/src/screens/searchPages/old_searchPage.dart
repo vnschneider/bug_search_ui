@@ -29,8 +29,9 @@ class _SearchPageState extends State<SearchPage> {
   List<dynamic> resultsFromJson = [];
   int resultsLength = 0;
   String searchKey = '';
-  double searchDensityValue = 20;
-  bool searchDensityChanged = false;
+  double sliderValue = 20;
+  double searchDensityValue = 100;
+
   final _searchController = TextEditingController();
   late ScrollController _scrollController;
 
@@ -58,23 +59,19 @@ class _SearchPageState extends State<SearchPage> {
   Future fetchDataFromAPI() async {
     try {
       List data = await fetchData2(
-          'http://api-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}');
+          'http://apiv2-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}');
 
+      resultsFromJson = data;
       setState(() {
-        resultsFromJson = data;
         resultsLength = resultsFromJson.length;
       });
+
       //print('PRINTING DATA FROM FETCHDATAFROMAPI');
       // print(resultsFromJson);
       // searchLength = data.length;
-      return data;
+      return resultsFromJson;
     } catch (e) {
       print('Algo deu errado! $e');
-    }
-    if (searchDensityChanged == true) {
-      fetchDataFromAPI();
-
-      searchDensityChanged = false;
     }
   }
 
@@ -228,17 +225,28 @@ class _SearchPageState extends State<SearchPage> {
                                     Theme.of(context).colorScheme.surface,
                                 activeColor:
                                     Theme.of(context).colorScheme.primary,
-                                value: searchDensityValue,
+                                value: sliderValue,
                                 min: 20,
                                 max: 100,
                                 divisions: 4,
-                                label:
-                                    "Densidade da busca: $searchDensityValue%",
+                                label: "Densidade da busca: $sliderValue%",
                                 onChanged: (newsearchDensityValue) {
-                                  setState(() {
-                                    searchDensityValue = newsearchDensityValue;
-                                    searchDensityChanged = true;
-                                  });
+                                  if (newsearchDensityValue == 20) {
+                                    searchDensityValue = 100;
+                                    sliderValue = 20;
+                                  } else if (newsearchDensityValue == 40) {
+                                    searchDensityValue = 250;
+                                    sliderValue = 40;
+                                  } else if (newsearchDensityValue == 60) {
+                                    searchDensityValue = 500;
+                                    sliderValue = 60;
+                                  } else if (newsearchDensityValue == 80) {
+                                    searchDensityValue = 750;
+                                    sliderValue = 80;
+                                  } else {
+                                    searchDensityValue = 1000;
+                                    sliderValue = 100;
+                                  }
                                 },
                               ),
                             ],
@@ -472,11 +480,6 @@ class _SearchPageState extends State<SearchPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         TextButton(
-                                          onHover: (value) {
-                                            setState(() {
-                                              isHovered = value;
-                                            });
-                                          },
                                           style: Theme.of(context)
                                               .textButtonTheme
                                               .style
@@ -546,6 +549,11 @@ class _SearchPageState extends State<SearchPage> {
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.6,
                                                     child: Text(
                                                       resultsFromJson[index]
                                                               ['link']
@@ -570,6 +578,10 @@ class _SearchPageState extends State<SearchPage> {
                                               ),
                                               const SizedBox(height: 8),
                                               SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.7,
                                                 child: Text(
                                                   resultsFromJson[index]
                                                                   ['title']
@@ -599,6 +611,10 @@ class _SearchPageState extends State<SearchPage> {
                                         ),
                                         const SizedBox(height: 8),
                                         SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7,
                                           child: Text(
                                             resultsFromJson[index]
                                                             ['description']
