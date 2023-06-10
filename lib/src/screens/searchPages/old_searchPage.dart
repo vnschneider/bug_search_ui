@@ -184,28 +184,24 @@ class _SearchPageState extends State<SearchPage> {
                         children: [
                           Row(
                             children: [
-                              Hero(
-                                tag: 'logo',
-                                child: IconButton(
-                                    tooltip:
-                                        'Ir para a página inicial do Bug Search',
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/');
-                                    },
-                                    style: Theme.of(context)
-                                        .textButtonTheme
-                                        .style
-                                        ?.copyWith(
-                                          overlayColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.transparent),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.transparent),
-                                        ),
-                                    icon: const Hero(
-                                        tag: 'logo', child: BSLogo())),
-                              ),
+                              IconButton(
+                                  tooltip:
+                                      'Ir para a página inicial do Bug Search',
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/');
+                                  },
+                                  style: Theme.of(context)
+                                      .textButtonTheme
+                                      .style
+                                      ?.copyWith(
+                                        overlayColor: MaterialStateProperty.all(
+                                            Colors.transparent),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.transparent),
+                                      ),
+                                  icon:
+                                      const Hero(tag: 'logo', child: BSLogo())),
                               Hero(
                                 tag: 'searchBar',
                                 child: CustomSearchBar(
@@ -233,12 +229,15 @@ class _SearchPageState extends State<SearchPage> {
                                         0.4),
                               ),
                               Slider(
-                                inactiveColor:
-                                    Theme.of(context).colorScheme.surface,
+                                inactiveColor: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
                                 activeColor:
                                     Theme.of(context).colorScheme.primary,
+                                // secondaryActiveColor:
+                                //     Theme.of(context).colorScheme.surface,
                                 value: sliderValue,
-                                min: 20,
+                                min: 0,
                                 max: 100,
                                 divisions: 4,
                                 label: "Densidade da busca: $sliderValue%",
@@ -246,19 +245,16 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     onSearch = true;
                                   });
-                                  if (newsearchDensityValue == 20) {
-                                    searchDensityValue = 100;
-                                    sliderValue = 20;
-                                  } else if (newsearchDensityValue == 40) {
+                                  if (newsearchDensityValue >= 40) {
                                     searchDensityValue = 250;
                                     sliderValue = 40;
-                                  } else if (newsearchDensityValue == 60) {
+                                  } else if (newsearchDensityValue >= 60) {
                                     searchDensityValue = 500;
                                     sliderValue = 60;
-                                  } else if (newsearchDensityValue == 80) {
+                                  } else if (newsearchDensityValue >= 80) {
                                     searchDensityValue = 750;
                                     sliderValue = 80;
-                                  } else {
+                                  } else if (newsearchDensityValue >= 100) {
                                     searchDensityValue = 1000;
                                     sliderValue = 100;
                                   }
