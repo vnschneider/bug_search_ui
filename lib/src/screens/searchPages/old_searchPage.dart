@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
     if (onSearch) {
       try {
         List data = await fetchData2(
-                'http://apiv2-bugsearch.eastus.cloudapp.azure.com/search?q=$searchKey&l=${searchDensityValue.toString()}')
+                'http://apiv2-bugsearch.eastus.cloudapp.azure.com/Search?q=$searchKey%20querto&p=1&m=20')
             .whenComplete(() => onSearch = false);
 
         resultsFromJson = data;
@@ -229,9 +229,9 @@ class _SearchPageState extends State<SearchPage> {
                                         0.4),
                               ),
                               Slider(
-                                inactiveColor: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant,
+                                //inactiveColor: Theme.of(context)
+                                //   .colorScheme
+                                //  .onSurfaceVariant,
                                 activeColor:
                                     Theme.of(context).colorScheme.primary,
                                 // secondaryActiveColor:
