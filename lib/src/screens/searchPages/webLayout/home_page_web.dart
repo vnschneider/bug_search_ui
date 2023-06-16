@@ -37,14 +37,12 @@ class _BugSearchUIWebState extends State<BugSearchUIWeb> {
   }
 
   Future fetchDataFromSummary2() async {
- 
     List indexedValues = await fetchDataSumary(
         'http://apiv2-bugsearch.eastus.cloudapp.azure.com/summary');
 
     indexedPages = indexedValues[0];
     indexedTerms = indexedValues[1];
 
-    
     //print(indexedValues);
     return indexedValues;
   }

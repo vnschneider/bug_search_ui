@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
     if (onSearch) {
       try {
         List data = await fetchData2(
-                'http://apiv2-bugsearch.eastus.cloudapp.azure.com/Search?q=$searchKey%20querto&p=1&m=20')
+                'http://apiv2-bugsearch.eastus.cloudapp.azure.com/Search?q=$searchKey%20querto&p=1&m=1000')
             .whenComplete(() => onSearch = false);
 
         resultsFromJson = data;
@@ -228,7 +228,7 @@ class _SearchPageState extends State<SearchPage> {
                                     width: MediaQuery.of(context).size.width *
                                         0.4),
                               ),
-                              Slider(
+                              /*   Slider(
                                 //inactiveColor: Theme.of(context)
                                 //   .colorScheme
                                 //  .onSurfaceVariant,
@@ -244,22 +244,23 @@ class _SearchPageState extends State<SearchPage> {
                                 onChanged: (newsearchDensityValue) {
                                   setState(() {
                                     onSearch = true;
+
+                                    if (newsearchDensityValue >= 40) {
+                                      searchDensityValue = 250;
+                                      sliderValue = 40;
+                                    } else if (newsearchDensityValue >= 60) {
+                                      searchDensityValue = 500;
+                                      sliderValue = 60;
+                                    } else if (newsearchDensityValue >= 80) {
+                                      searchDensityValue = 750;
+                                      sliderValue = 80;
+                                    } else if (newsearchDensityValue >= 100) {
+                                      searchDensityValue = 1000;
+                                      sliderValue = 100;
+                                    }
                                   });
-                                  if (newsearchDensityValue >= 40) {
-                                    searchDensityValue = 250;
-                                    sliderValue = 40;
-                                  } else if (newsearchDensityValue >= 60) {
-                                    searchDensityValue = 500;
-                                    sliderValue = 60;
-                                  } else if (newsearchDensityValue >= 80) {
-                                    searchDensityValue = 750;
-                                    sliderValue = 80;
-                                  } else if (newsearchDensityValue >= 100) {
-                                    searchDensityValue = 1000;
-                                    sliderValue = 100;
-                                  }
                                 },
-                              ),
+                              ),*/
                             ],
                           ),
                           Flexible(
@@ -539,12 +540,28 @@ class _SearchPageState extends State<SearchPage> {
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: [
-                                                    SvgPicture.asset(
-                                                        'assets/bs_logo.svg',
-                                                        height: 26,
-                                                        width: 26,
-                                                        semanticsLabel:
-                                                            'Bug Search Logo'),
+                                                    resultsFromJson[index]
+                                                                ['favicon']
+                                                            .toString()
+                                                            .endsWith('.png')
+                                                        ? FittedBox(
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                            child: Image.network(
+                                                                height: 24,
+                                                                width: 24,
+                                                                resultsFromJson[
+                                                                            index]
+                                                                        [
+                                                                        'favicon']
+                                                                    .toString()),
+                                                          )
+                                                        : SvgPicture.asset(
+                                                            'assets/bs_logo.svg',
+                                                            height: 26,
+                                                            width: 26,
+                                                            semanticsLabel:
+                                                                'Bug Search Logo'),
                                                     const SizedBox(width: 10),
                                                     SizedBox(
                                                       width:
